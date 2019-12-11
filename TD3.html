@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html data-markdown-preview-plus-context="html-export">
+  <head>
+    <meta charset="utf-8" />
+    <title>TD3</title><script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["[a11y]/accessibility-menu.js"],
+    'HTML-CSS': {
+      availableFonts: [],
+      webFont: 'TeX',
+      undefinedFamily: "serif",
+      mtextFontInherit: true,
+    },
+    TeX: {
+  "Macros": {},
+  "equationNumbers": {},
+  "extensions": [
+    "AMSmath.js",
+    "AMSsymbols.js",
+    "noErrors.js",
+    "noUndefined.js"
+  ]
+},
+    showMathMenu: true
+  });
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js"></script>
+    <style>.emoji {
+  max-width: 1em !important;
+}
+del {
+  text-decoration: none;
+  position: relative;
+}
+del::after {
+  border-bottom: 1px solid black;
+  content: '';
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+ul.contains-task-list li.task-list-item {
+  position: relative;
+  list-style-type: none;
+}
+ul.contains-task-list li.task-list-item input.task-list-item-checkbox {
+  position: absolute;
+  transform: translateX(-100%);
+  width: 30px;
+}
+span.critic.comment {
+  position: relative;
+}
+span.critic.comment::before {
+  content: '\1f4ac';
+  position: initial;
+}
+span.critic.comment > span {
+  display: none;
+}
+span.critic.comment:hover > span {
+  display: initial;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border: 1px solid;
+  border-radius: 5px;
+  max-height: 4em;
+  overflow: auto;
+}
+span.critic.comment:focus > span {
+  display: initial;
+  text-decoration: underline;
+  position: initial;
+  top: auto;
+  left: auto;
+  border: initial;
+  border-radius: initial;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: transparent;
+}
+
+body {
+  padding: 2em;
+  font-size: 1.2em;
+  color: #1d1f21;
+  background-color: #ffffff;
+  overflow: auto;
+}
+body > :first-child,
+body > div.update-preview > :first-child {
+  margin-top: 0;
+}
+body > p,
+body > div.update-preview > p {
+  margin-top: 0;
+  margin-bottom: 1.5em;
+}
+body > ul,
+body > div.update-preview > ul,
+body > ol,
+body > div.update-preview > ol {
+  margin-bottom: 1.5em;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.2;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: #000000;
+}
+h1 {
+  font-size: 2.4em;
+  font-weight: 300;
+}
+h2 {
+  font-size: 1.8em;
+  font-weight: 400;
+}
+h3 {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+h4 {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+h5 {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+h6 {
+  font-size: 1em;
+  font-weight: 600;
+}
+strong {
+  color: #000000;
+}
+del {
+  color: #43484c;
+}
+a,
+a code {
+  color: #1d1f21;
+}
+img {
+  max-width: 100%;
+}
+blockquote {
+  margin: 1.5em 0;
+  font-size: inherit;
+  color: #43484c;
+  border-color: #d6d6d6;
+  border-width: 4px;
+}
+hr {
+  margin: 3em 0;
+  border-top: 2px dashed #d6d6d6;
+  background: none;
+}
+table {
+  margin: 1.5em 0;
+}
+th {
+  color: #000000;
+}
+th,
+td {
+  padding: 0.66em 1em;
+  border: 1px solid #d6d6d6;
+}
+code {
+  color: #000000;
+  background-color: #f0f0f0;
+}
+pre.editor-colors {
+  margin: 1.5em 0;
+  padding: 1em;
+  font-size: 0.92em;
+  border-radius: 3px;
+  background-color: #f5f5f5;
+}
+kbd {
+  color: #000000;
+  border: 1px solid #d6d6d6;
+  border-bottom: 2px solid #c7c7c7;
+  background-color: #f0f0f0;
+}
+
+pre.editor-colors {
+  background-color: white;
+  color: #555;
+}
+pre.editor-colors .invisible-character {
+  color: rgba(85, 85, 85, 0.2);
+}
+pre.editor-colors .indent-guide {
+  color: rgba(85, 85, 85, 0.2);
+}
+pre.editor-colors .wrap-guide {
+  background-color: rgba(85, 85, 85, 0.2);
+}
+pre.editor-colors .gutter {
+  color: #555;
+  background: white;
+}
+pre.editor-colors .gutter .line-number.folded,
+pre.editor-colors .gutter .line-number:after,
+pre.editor-colors .fold-marker:after {
+  color: #e87b00;
+}
+pre.editor-colors .invisible {
+  color: #555;
+}
+pre.editor-colors .selection .region {
+  background-color: #e1e1e1;
+}
+pre.editor-colors .bracket-matcher .region {
+  background-color: #C9C9C9;
+  opacity: .7;
+  border-bottom: 0 none;
+}
+pre.editor-colors.is-focused .cursor {
+  border-color: black;
+}
+pre.editor-colors.is-focused .selection .region {
+  background-color: #afc4da;
+}
+pre.editor-colors.is-focused .line-number.cursor-line-no-selection,
+pre.editor-colors.is-focused .line.cursor-line {
+  background-color: rgba(255, 255, 134, 0.34);
+}
+.syntax--comment {
+  color: #999988;
+  font-style: italic;
+}
+.syntax--string {
+  color: #D14;
+}
+.syntax--string .syntax--source,
+.syntax--string .syntax--meta.syntax--embedded.syntax--line {
+  color: #5A5A5A;
+}
+.syntax--string .syntax--punctuation.syntax--section.syntax--embedded {
+  color: #920B2D;
+}
+.syntax--string .syntax--punctuation.syntax--section.syntax--embedded .syntax--source {
+  color: #920B2D;
+}
+.syntax--constant.syntax--numeric {
+  color: #D14;
+}
+.syntax--constant.syntax--language {
+  color: #606aa1;
+}
+.syntax--constant.syntax--character,
+.syntax--constant.syntax--other {
+  color: #606aa1;
+}
+.syntax--constant.syntax--symbol {
+  color: #990073;
+}
+.syntax--constant.syntax--numeric.syntax--line-number.syntax--find-in-files .syntax--match {
+  color: rgba(143, 190, 0, 0.63);
+}
+.syntax--variable {
+  color: #008080;
+}
+.syntax--variable.syntax--parameter {
+  color: #606aa1;
+}
+.syntax--keyword {
+  color: #222;
+  font-weight: bold;
+}
+.syntax--keyword.syntax--unit {
+  color: #445588;
+}
+.syntax--keyword.syntax--special-method {
+  color: #0086B3;
+}
+.syntax--storage {
+  color: #222;
+}
+.syntax--storage.syntax--type {
+  color: #222;
+}
+.syntax--entity.syntax--name.syntax--class {
+  text-decoration: underline;
+  color: #606aa1;
+}
+.syntax--entity.syntax--other.syntax--inherited-class {
+  text-decoration: underline;
+  color: #606aa1;
+}
+.syntax--entity.syntax--name.syntax--function {
+  color: #900;
+}
+.syntax--entity.syntax--name.syntax--tag {
+  color: #008080;
+}
+.syntax--entity.syntax--other.syntax--attribute-name {
+  color: #458;
+  font-weight: bold;
+}
+.syntax--entity.syntax--name.syntax--filename.syntax--find-in-files {
+  color: #E6DB74;
+}
+.syntax--support.syntax--constant,
+.syntax--support.syntax--function,
+.syntax--support.syntax--type {
+  color: #458;
+}
+.syntax--support.syntax--class {
+  color: #008080;
+}
+.syntax--invalid {
+  color: #F8F8F0;
+  background-color: #00A8C6;
+}
+.syntax--invalid.syntax--deprecated {
+  color: #F8F8F0;
+  background-color: #8FBE00;
+}
+.syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--string.syntax--quoted.syntax--double.syntax--json,
+.syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--string.syntax--quoted.syntax--double.syntax--json .syntax--punctuation.syntax--string {
+  color: #000080;
+}
+.syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--double.syntax--json {
+  color: #d14;
+}
+.syntax--meta.syntax--diff,
+.syntax--meta.syntax--diff.syntax--header {
+  color: #75715E;
+}
+.syntax--css.syntax--support.syntax--property-name {
+  font-weight: bold;
+  color: #333;
+}
+.syntax--css.syntax--constant {
+  color: #099;
+}
+.syntax--source.syntax--gfm {
+  color: #444;
+}
+.syntax--gfm .syntax--markup.syntax--heading {
+  color: #111;
+}
+.syntax--gfm .syntax--link {
+  color: #888;
+}
+.syntax--gfm .syntax--variable.syntax--list {
+  color: #888;
+}
+.syntax--markdown .syntax--paragraph {
+  color: #444;
+}
+.syntax--markdown .syntax--heading {
+  color: #111;
+}
+.syntax--markdown .syntax--link {
+  color: #888;
+}
+.syntax--markdown .syntax--link .syntax--string {
+  color: #888;
+}
+</style>
+
+  </head>
+  <body>
+    <h1>Session 3 : Threading</h1>
+<p>Razmig Kéchichian</p>
+<h3><em>Learning outcomes</em></h3>
+<p>The aim of this session is to familiarize you with:</p>
+<ul>
+<li>multithreading in Python, and</li>
+<li>task parallelism with threads.</li>
+</ul>
+<h2>I. Python threads</h2>
+<p>Recall that threads are separate execution paths within a single process. As such, they share program code, data and external resources, such as open files. Also recall that CPython, the reference and most widely-used Python implementation, uses a global interpreter lock (GIL) the consequence of which is that only one thread can execute Python code at a time, that is, Python threads run <em>concurrently</em> and not in parallel. In most situations, this doesn’t constitute a limitation; first, multiprocessing is a better choice for CPU-bound tasks in which case the GIL has no impact, and second, multithreading is a valid approach for IO-bound tasks since a thread releases the GIL when it has to wait for IO allowing other threads to execute. To sum up, the usual use case for threads is to improve the responsiveness of especially user-facing applications by running tasks, usually IO, in the background. It is not uncommon to design complex programs as multiple processes some multi others single-threaded with interprocess communication (IPC).</p>
+<p>Python thread creation and synchronization tools are defined in the standard module <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">threading</code>. The API of this module is rather similar to that of the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing</code> module. The abstraction representing a thread is the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">threading.Thread</code> class which, similarly to <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing.Process</code>, allows you to create a new thread in your Python program either by:</p>
+<ol>
+<li>subclassing it and defining its <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">run()</code> method, or</li>
+<li>simply by creating a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">threading.Thread</code> object and passing it the name and the arguments of the function to be executed in a separate thread.</li>
+</ol>
+<p>To illustrate the use of <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">threading.Thread</code>, here’s a multithreaded solution of the Fibonacci series generation exercise from Session 1 (without error checking).</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">import</span> sys</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">import</span> threading</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--storage syntax--type syntax--function">def</span> <span class="syntax--entity syntax--name syntax--function">fibonacci</span>(<span class="syntax--variable syntax--parameter syntax--function">n</span>):</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"Starting thread:"</span>, threading.<span class="syntax--entity syntax--name syntax--function">current_thread</span>().<span class="syntax--variable syntax--other syntax--object syntax--property">name</span>)</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>res <span class="syntax--keyword syntax--operator">=</span> [<span class="syntax--constant syntax--numeric">0</span>]</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>a, b <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--constant syntax--numeric">0</span>, <span class="syntax--constant syntax--numeric">1</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>i <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--constant syntax--numeric">0</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">while</span> i <span class="syntax--keyword syntax--operator">&lt;</span> n:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span>a, b <span class="syntax--keyword syntax--operator">=</span> b, a<span class="syntax--keyword syntax--operator">+</span>b</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span>res.<span class="syntax--entity syntax--name syntax--function">append</span>(a)</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span>i <span class="syntax--keyword syntax--operator">+=</span> <span class="syntax--constant syntax--numeric">1</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--support syntax--function">print</span>(res)</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"Ending thread:"</span>, threading.<span class="syntax--entity syntax--name syntax--function">current_thread</span>().<span class="syntax--variable syntax--other syntax--object syntax--property">name</span>)</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">if</span> __name__ <span class="syntax--keyword syntax--operator">==</span> <span class="syntax--string syntax--quoted">"__main__"</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"Starting thread:"</span>, threading.<span class="syntax--entity syntax--name syntax--function">current_thread</span>().<span class="syntax--variable syntax--other syntax--object syntax--property">name</span>)</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>index <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--support syntax--function">int</span>(sys.<span class="syntax--variable syntax--other syntax--object syntax--property">argv</span>[<span class="syntax--constant syntax--numeric">1</span>])</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>thread <span class="syntax--keyword syntax--operator">=</span> threading.<span class="syntax--entity syntax--name syntax--function">Thread</span>(<span class="syntax--variable syntax--parameter syntax--function">target</span><span class="syntax--keyword syntax--operator">=</span>fibonacci, <span class="syntax--variable syntax--parameter syntax--function">args</span><span class="syntax--keyword syntax--operator">=</span>(index,))</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>thread.<span class="syntax--entity syntax--name syntax--function">start</span>()</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>thread.<span class="syntax--entity syntax--name syntax--function">join</span>()</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"Ending thread:"</span>, threading.<span class="syntax--entity syntax--name syntax--function">current_thread</span>().<span class="syntax--variable syntax--other syntax--object syntax--property">name</span>)<span class="trailing-whitespace">                </span></span></span></pre>
+<p>Execute this program and observe its behavior. As you have probably guessed, the method <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">thread.start()</code> starts the thread’s execution, and the method <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">thread.join()</code> blocks the calling thread until <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">thread</code> terminates. ‘print’ statements serve the purpose of logging thread start/end on the standard output. Before moving to the first exercise, have a quick look on <a href="https://docs.python.org/3/library/threading.html#thread-objects">the documentation of the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">threading.Thread</code> class</a>.</p>
+<h3><em>Exercise 1: How much is <span class="math inline-math"><script type="math/tex">\pi</script></span> ?</em></h3>
+<p><img src="https://moodle.insa-lyon.fr/pluginfile.php/163016/mod_resource/content/1/mc-pi.png" alt="Monte Carlo for pi"></p>
+<p>A classic approach to estimate <span class="math inline-math"><script type="math/tex">\pi</script></span> is using the <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method">Monte Carlo method</a> which involves randomization. This works as follows. Frist, assume a circle of radius equal to 1, inscribed within a square and centered on the origin of the Cartesian plane as in the figure above. Next, generate a series of random points <span class="math inline-math"><script type="math/tex">(x, y)</script></span> which fall within the coordinates of the square. Some of the generated points will occur within the circle. Then <span class="math inline-math"><script type="math/tex">\pi</script></span> is estimated by:</p>
+<span class="math display-math"><script type="math/tex; mode=display">\pi = 4 \times \text{(number of points in circle)} / \text{(total number of points)}
+</script></span>
+<p>Write a multithreaded program that creates a separate thread to generate a number of random points. The thread will count the number of points that occur within the circle and store the result in a global variable. When this thread exits, the main thread will calculate and output the estimated value of <span class="math inline-math"><script type="math/tex">\pi</script></span>. Experiment with the number of random points generated.</p>
+<p>Hints:</p>
+<ul>
+<li>To assert that a point <span class="math inline-math"><script type="math/tex">(x,y)</script></span> falls within a circle of radius <span class="math inline-math"><script type="math/tex">R</script></span>, it suffices that <span class="math inline-math"><script type="math/tex">x^2 + y^2 <= R</script></span>.</li>
+<li>You can generate random real numbers falling into the interval <span class="math inline-math"><script type="math/tex">[0, 1)</script></span> via <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">random.random()</code></li>
+</ul>
+<h2>II. Task parallelism with threads</h2>
+<p>Recall that <em>task parallelism</em> involves distributing operations across multiple workers (threads or processes), each performing a unique operation on often the same data. In contrast, <em>data parallelism</em> distributes subsets of data across multiple workers each performing the same operation. In practice, however, few applications strictly follow either data or task parallelism. In most cases, a hybrid of these two
+strategies is used.</p>
+<p>The <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">threading</code> module provides a number of useful tools to synchronize the concurrent execution of threads most of which will be addressed in due course during later sessions. For the purposes of the following exercise, we shall look at the simplest of these synchronization tools, the <a href="https://docs.python.org/3/library/threading.html#event-objects"><code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Event</code> class</a> which allows for a thread to signal the occurrence of an event for other threads waiting for it. Have a look on the documentation of this class to understand how it works.</p>
+<p>The <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">queue</code> standard module provides thread-safe queue objects with similar API and patterns of use to the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing.Queue</code> class we encountered during the last session. You may want to review that information to refresh your memory. In the following exercise, we shall use the <a href="https://docs.python.org/3/library/queue.html#queue-objects">class <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">queue.Queue</code></a>.</p>
+<p>The following program illustrates the use of both <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Event</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Queue</code> objects. A main thread creates a worker thread which waits on an event object. Next, the main thread reads some data from the standard input and puts it in the queue. Once data is available, the main thread signals the event allowing the worker thread to proceed with reading it from the queue.</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">import</span> threading</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">from</span> queue <span class="syntax--keyword syntax--control">import</span> Queue</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--storage syntax--type syntax--function">def</span> <span class="syntax--entity syntax--name syntax--function">worker</span>(<span class="syntax--variable syntax--parameter syntax--function">queue</span>, <span class="syntax--variable syntax--parameter syntax--function">data_ready</span>):</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"Starting thread:"</span>, threading.<span class="syntax--entity syntax--name syntax--function">current_thread</span>().<span class="syntax--variable syntax--other syntax--object syntax--property">name</span>)<span class="trailing-whitespace">    </span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>data_ready.<span class="syntax--entity syntax--name syntax--function">wait</span>()</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>value <span class="syntax--keyword syntax--operator">=</span> queue.<span class="syntax--entity syntax--name syntax--function">get</span>()</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"got value:"</span>, value)</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"Ending thread:"</span>, threading.<span class="syntax--entity syntax--name syntax--function">current_thread</span>().<span class="syntax--variable syntax--other syntax--object syntax--property">name</span>)</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">if</span> __name__ <span class="syntax--keyword syntax--operator">==</span> <span class="syntax--string syntax--quoted">"__main__"</span>:<span class="trailing-whitespace">   </span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"Starting thread:"</span>, threading.<span class="syntax--entity syntax--name syntax--function">current_thread</span>().<span class="syntax--variable syntax--other syntax--object syntax--property">name</span>)</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>queue <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--entity syntax--name syntax--function">Queue</span>()</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>data_ready <span class="syntax--keyword syntax--operator">=</span> threading.<span class="syntax--entity syntax--name syntax--function">Event</span>()</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>thread <span class="syntax--keyword syntax--operator">=</span> threading.<span class="syntax--entity syntax--name syntax--function">Thread</span>(<span class="syntax--variable syntax--parameter syntax--function">target</span><span class="syntax--keyword syntax--operator">=</span>worker, <span class="syntax--variable syntax--parameter syntax--function">args</span><span class="syntax--keyword syntax--operator">=</span>(queue, data_ready))</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>thread.<span class="syntax--entity syntax--name syntax--function">start</span>()</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>value <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--support syntax--function">input</span>(<span class="syntax--string syntax--quoted">"give me some value:"</span>)</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>queue.<span class="syntax--entity syntax--name syntax--function">put</span>(value)</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>data_ready.<span class="syntax--entity syntax--name syntax--function">set</span>()</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>thread.<span class="syntax--entity syntax--name syntax--function">join</span>()</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"Ending thread:"</span>, threading.<span class="syntax--entity syntax--name syntax--function">current_thread</span>().<span class="syntax--variable syntax--other syntax--object syntax--property">name</span>)</span></span></pre>
+<h2><em>Exercise 2: the INSEE office</em></h2>
+<p>We would like to calculate the following statistics on numeric data: min, max, median, mean and standard deviation. Write a multithreaded program where the main thread creates a number of workers equal to the number of statistics to perform, reads data from the terminal and signals data availability to its workers which proceed to calculate and display statistics. <strong>Do not</strong> define 5 different functions to be executed in worker threads, define a single worker function and pass operations as an argument in a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">queue.Queue</code>.</p>
+<p>Hints:</p>
+<ul>
+<li>To calculate statistics, use built-in functions <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">min</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">max</code>, and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">statistics</code> module functions <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">median</code>, <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">mean</code> and  <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">stdev</code>.</li>
+<li>Every thread displays the result of its computation. You may also choose to return computation results to the main thread in a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">queue.Queue</code>.</li>
+<li>To read data from the standard input until end-of-file (EOF) is encountered, you can use the following code snippet.<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python">data <span class="syntax--keyword syntax--operator">=</span> []</span></span>
+<span class=""><span class="syntax--source syntax--python">input_str <span class="syntax--keyword syntax--operator">=</span> sys.<span class="syntax--variable syntax--other syntax--object syntax--property">stdin</span>.<span class="syntax--entity syntax--name syntax--function">read</span>().<span class="syntax--entity syntax--name syntax--function">split</span>()</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">for</span> s <span class="syntax--keyword syntax--operator syntax--logical syntax--python">in</span> input_str:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">try</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span>x <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--support syntax--function">float</span>(s)</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">except</span> <span class="syntax--support syntax--type syntax--exception">ValueError</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"bad number"</span>, s)</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">else</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span>data.<span class="syntax--entity syntax--name syntax--function">append</span>(x)<span class="trailing-whitespace">    </span></span></span></pre>
+</li>
+<li>In your initial solution, display the calculated statistic in the worker thread. Extend this version to put statistics calculated in worker threads into a queue, the contents of which are displayed by the main thread.</li>
+</ul>
+
+  </body>
+</html>

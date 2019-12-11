@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html data-markdown-preview-plus-context="html-export">
+  <head>
+    <meta charset="utf-8" />
+    <title>TD1</title><script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["[a11y]/accessibility-menu.js"],
+    'HTML-CSS': {
+      availableFonts: [],
+      webFont: 'TeX',
+      undefinedFamily: "serif",
+      mtextFontInherit: true,
+    },
+    TeX: {
+  "Macros": {},
+  "equationNumbers": {},
+  "extensions": [
+    "AMSmath.js",
+    "AMSsymbols.js",
+    "noErrors.js",
+    "noUndefined.js"
+  ]
+},
+    showMathMenu: true
+  });
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js"></script>
+    <style>.emoji {
+  max-width: 1em !important;
+}
+del {
+  text-decoration: none;
+  position: relative;
+}
+del::after {
+  border-bottom: 1px solid black;
+  content: '';
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+ul.contains-task-list li.task-list-item {
+  position: relative;
+  list-style-type: none;
+}
+ul.contains-task-list li.task-list-item input.task-list-item-checkbox {
+  position: absolute;
+  transform: translateX(-100%);
+  width: 30px;
+}
+span.critic.comment {
+  position: relative;
+}
+span.critic.comment::before {
+  content: '\1f4ac';
+  position: initial;
+}
+span.critic.comment > span {
+  display: none;
+}
+span.critic.comment:hover > span {
+  display: initial;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border: 1px solid;
+  border-radius: 5px;
+  max-height: 4em;
+  overflow: auto;
+}
+span.critic.comment:focus > span {
+  display: initial;
+  text-decoration: underline;
+  position: initial;
+  top: auto;
+  left: auto;
+  border: initial;
+  border-radius: initial;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: transparent;
+}
+
+body {
+  padding: 2em;
+  font-size: 1.2em;
+  color: #1d1f21;
+  background-color: #ffffff;
+  overflow: auto;
+}
+body > :first-child,
+body > div.update-preview > :first-child {
+  margin-top: 0;
+}
+body > p,
+body > div.update-preview > p {
+  margin-top: 0;
+  margin-bottom: 1.5em;
+}
+body > ul,
+body > div.update-preview > ul,
+body > ol,
+body > div.update-preview > ol {
+  margin-bottom: 1.5em;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.2;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: #000000;
+}
+h1 {
+  font-size: 2.4em;
+  font-weight: 300;
+}
+h2 {
+  font-size: 1.8em;
+  font-weight: 400;
+}
+h3 {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+h4 {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+h5 {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+h6 {
+  font-size: 1em;
+  font-weight: 600;
+}
+strong {
+  color: #000000;
+}
+del {
+  color: #43484c;
+}
+a,
+a code {
+  color: #1d1f21;
+}
+img {
+  max-width: 100%;
+}
+blockquote {
+  margin: 1.5em 0;
+  font-size: inherit;
+  color: #43484c;
+  border-color: #d6d6d6;
+  border-width: 4px;
+}
+hr {
+  margin: 3em 0;
+  border-top: 2px dashed #d6d6d6;
+  background: none;
+}
+table {
+  margin: 1.5em 0;
+}
+th {
+  color: #000000;
+}
+th,
+td {
+  padding: 0.66em 1em;
+  border: 1px solid #d6d6d6;
+}
+code {
+  color: #000000;
+  background-color: #f0f0f0;
+}
+pre.editor-colors {
+  margin: 1.5em 0;
+  padding: 1em;
+  font-size: 0.92em;
+  border-radius: 3px;
+  background-color: #f5f5f5;
+}
+kbd {
+  color: #000000;
+  border: 1px solid #d6d6d6;
+  border-bottom: 2px solid #c7c7c7;
+  background-color: #f0f0f0;
+}
+
+pre.editor-colors {
+  background-color: #fafafa;
+  color: #383a42;
+}
+pre.editor-colors .line.cursor-line {
+  background-color: rgba(56, 58, 66, 0.05);
+}
+pre.editor-colors .invisible {
+  color: #383a42;
+}
+pre.editor-colors .cursor {
+  border-left: 2px solid #526fff;
+}
+pre.editor-colors .selection .region {
+  background-color: #e5e5e6;
+}
+pre.editor-colors .bracket-matcher .region {
+  border-bottom: 1px solid #526fff;
+  box-sizing: border-box;
+}
+pre.editor-colors .invisible-character {
+  color: rgba(56, 58, 66, 0.2);
+}
+pre.editor-colors .indent-guide {
+  color: rgba(56, 58, 66, 0.2);
+}
+pre.editor-colors .wrap-guide {
+  background-color: rgba(56, 58, 66, 0.2);
+}
+pre.editor-colors .find-result .region.region.region,
+pre.editor-colors .current-result .region.region.region {
+  border-radius: 2px;
+  background-color: rgba(82, 111, 255, 0.2);
+  transition: border-color 0.4s;
+}
+pre.editor-colors .find-result .region.region.region {
+  border: 2px solid transparent;
+}
+pre.editor-colors .current-result .region.region.region {
+  border: 2px solid #526fff;
+  transition-duration: .1s;
+}
+pre.editor-colors .gutter .line-number {
+  color: #9d9d9f;
+  -webkit-font-smoothing: antialiased;
+}
+pre.editor-colors .gutter .line-number.cursor-line {
+  color: #383a42;
+  background-color: #e5e5e6;
+}
+pre.editor-colors .gutter .line-number.cursor-line-no-selection {
+  background-color: transparent;
+}
+pre.editor-colors .gutter .line-number .icon-right {
+  color: #383a42;
+}
+pre.editor-colors .gutter:not(.git-diff-icon) .line-number.git-line-removed.git-line-removed::before {
+  bottom: -3px;
+}
+pre.editor-colors .gutter:not(.git-diff-icon) .line-number.git-line-removed::after {
+  content: "";
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 25px;
+  border-bottom: 1px dotted rgba(255, 20, 20, 0.5);
+  pointer-events: none;
+}
+pre.editor-colors .gutter .line-number.folded,
+pre.editor-colors .gutter .line-number:after,
+pre.editor-colors .fold-marker:after {
+  color: #383a42;
+}
+.syntax--comment {
+  color: #a0a1a7;
+  font-style: italic;
+}
+.syntax--comment .syntax--markup.syntax--link {
+  color: #a0a1a7;
+}
+.syntax--entity.syntax--name.syntax--type {
+  color: #c18401;
+}
+.syntax--entity.syntax--other.syntax--inherited-class {
+  color: #50a14f;
+}
+.syntax--keyword {
+  color: #a626a4;
+}
+.syntax--keyword.syntax--control {
+  color: #a626a4;
+}
+.syntax--keyword.syntax--operator {
+  color: #383a42;
+}
+.syntax--keyword.syntax--other.syntax--special-method {
+  color: #4078f2;
+}
+.syntax--keyword.syntax--other.syntax--unit {
+  color: #986801;
+}
+.syntax--storage {
+  color: #a626a4;
+}
+.syntax--storage.syntax--type.syntax--annotation,
+.syntax--storage.syntax--type.syntax--primitive {
+  color: #a626a4;
+}
+.syntax--storage.syntax--modifier.syntax--package,
+.syntax--storage.syntax--modifier.syntax--import {
+  color: #383a42;
+}
+.syntax--constant {
+  color: #986801;
+}
+.syntax--constant.syntax--variable {
+  color: #986801;
+}
+.syntax--constant.syntax--character.syntax--escape {
+  color: #0184bc;
+}
+.syntax--constant.syntax--numeric {
+  color: #986801;
+}
+.syntax--constant.syntax--other.syntax--color {
+  color: #0184bc;
+}
+.syntax--constant.syntax--other.syntax--symbol {
+  color: #0184bc;
+}
+.syntax--variable {
+  color: #e45649;
+}
+.syntax--variable.syntax--interpolation {
+  color: #ca1243;
+}
+.syntax--variable.syntax--parameter {
+  color: #383a42;
+}
+.syntax--string {
+  color: #50a14f;
+}
+.syntax--string > .syntax--source,
+.syntax--string .syntax--embedded {
+  color: #383a42;
+}
+.syntax--string.syntax--regexp {
+  color: #0184bc;
+}
+.syntax--string.syntax--regexp .syntax--source.syntax--ruby.syntax--embedded {
+  color: #c18401;
+}
+.syntax--string.syntax--other.syntax--link {
+  color: #e45649;
+}
+.syntax--punctuation.syntax--definition.syntax--comment {
+  color: #a0a1a7;
+}
+.syntax--punctuation.syntax--definition.syntax--method-parameters,
+.syntax--punctuation.syntax--definition.syntax--function-parameters,
+.syntax--punctuation.syntax--definition.syntax--parameters,
+.syntax--punctuation.syntax--definition.syntax--separator,
+.syntax--punctuation.syntax--definition.syntax--seperator,
+.syntax--punctuation.syntax--definition.syntax--array {
+  color: #383a42;
+}
+.syntax--punctuation.syntax--definition.syntax--heading,
+.syntax--punctuation.syntax--definition.syntax--identity {
+  color: #4078f2;
+}
+.syntax--punctuation.syntax--definition.syntax--bold {
+  color: #c18401;
+  font-weight: bold;
+}
+.syntax--punctuation.syntax--definition.syntax--italic {
+  color: #a626a4;
+  font-style: italic;
+}
+.syntax--punctuation.syntax--section.syntax--embedded {
+  color: #ca1243;
+}
+.syntax--punctuation.syntax--section.syntax--method,
+.syntax--punctuation.syntax--section.syntax--class,
+.syntax--punctuation.syntax--section.syntax--inner-class {
+  color: #383a42;
+}
+.syntax--support.syntax--class {
+  color: #c18401;
+}
+.syntax--support.syntax--type {
+  color: #0184bc;
+}
+.syntax--support.syntax--function {
+  color: #0184bc;
+}
+.syntax--support.syntax--function.syntax--any-method {
+  color: #4078f2;
+}
+.syntax--entity.syntax--name.syntax--function {
+  color: #4078f2;
+}
+.syntax--entity.syntax--name.syntax--class,
+.syntax--entity.syntax--name.syntax--type.syntax--class {
+  color: #c18401;
+}
+.syntax--entity.syntax--name.syntax--section {
+  color: #4078f2;
+}
+.syntax--entity.syntax--name.syntax--tag {
+  color: #e45649;
+}
+.syntax--entity.syntax--other.syntax--attribute-name {
+  color: #986801;
+}
+.syntax--entity.syntax--other.syntax--attribute-name.syntax--id {
+  color: #4078f2;
+}
+.syntax--meta.syntax--class {
+  color: #c18401;
+}
+.syntax--meta.syntax--class.syntax--body {
+  color: #383a42;
+}
+.syntax--meta.syntax--method-call,
+.syntax--meta.syntax--method {
+  color: #383a42;
+}
+.syntax--meta.syntax--definition.syntax--variable {
+  color: #e45649;
+}
+.syntax--meta.syntax--link {
+  color: #986801;
+}
+.syntax--meta.syntax--require {
+  color: #4078f2;
+}
+.syntax--meta.syntax--selector {
+  color: #a626a4;
+}
+.syntax--meta.syntax--separator {
+  color: #383a42;
+}
+.syntax--meta.syntax--tag {
+  color: #383a42;
+}
+.syntax--underline {
+  text-decoration: underline;
+}
+.syntax--none {
+  color: #383a42;
+}
+.syntax--invalid.syntax--deprecated {
+  color: #000000 !important;
+  background-color: #f2a60d !important;
+}
+.syntax--invalid.syntax--illegal {
+  color: white !important;
+  background-color: #ff1414 !important;
+}
+.syntax--markup.syntax--bold {
+  color: #986801;
+  font-weight: bold;
+}
+.syntax--markup.syntax--changed {
+  color: #a626a4;
+}
+.syntax--markup.syntax--deleted {
+  color: #e45649;
+}
+.syntax--markup.syntax--italic {
+  color: #a626a4;
+  font-style: italic;
+}
+.syntax--markup.syntax--heading {
+  color: #e45649;
+}
+.syntax--markup.syntax--heading .syntax--punctuation.syntax--definition.syntax--heading {
+  color: #4078f2;
+}
+.syntax--markup.syntax--link {
+  color: #0184bc;
+}
+.syntax--markup.syntax--inserted {
+  color: #50a14f;
+}
+.syntax--markup.syntax--quote {
+  color: #986801;
+}
+.syntax--markup.syntax--raw {
+  color: #50a14f;
+}
+.syntax--source.syntax--c .syntax--keyword.syntax--operator {
+  color: #a626a4;
+}
+.syntax--source.syntax--cpp .syntax--keyword.syntax--operator {
+  color: #a626a4;
+}
+.syntax--source.syntax--cs .syntax--keyword.syntax--operator {
+  color: #a626a4;
+}
+.syntax--source.syntax--css .syntax--property-name,
+.syntax--source.syntax--css .syntax--property-value {
+  color: #696c77;
+}
+.syntax--source.syntax--css .syntax--property-name.syntax--support,
+.syntax--source.syntax--css .syntax--property-value.syntax--support {
+  color: #383a42;
+}
+.syntax--source.syntax--elixir .syntax--source.syntax--embedded.syntax--source {
+  color: #383a42;
+}
+.syntax--source.syntax--elixir .syntax--constant.syntax--language,
+.syntax--source.syntax--elixir .syntax--constant.syntax--numeric,
+.syntax--source.syntax--elixir .syntax--constant.syntax--definition {
+  color: #4078f2;
+}
+.syntax--source.syntax--elixir .syntax--variable.syntax--definition,
+.syntax--source.syntax--elixir .syntax--variable.syntax--anonymous {
+  color: #a626a4;
+}
+.syntax--source.syntax--elixir .syntax--parameter.syntax--variable.syntax--function {
+  color: #986801;
+  font-style: italic;
+}
+.syntax--source.syntax--elixir .syntax--quoted {
+  color: #50a14f;
+}
+.syntax--source.syntax--elixir .syntax--keyword.syntax--special-method,
+.syntax--source.syntax--elixir .syntax--embedded.syntax--section,
+.syntax--source.syntax--elixir .syntax--embedded.syntax--source.syntax--empty {
+  color: #e45649;
+}
+.syntax--source.syntax--elixir .syntax--readwrite.syntax--module .syntax--punctuation {
+  color: #e45649;
+}
+.syntax--source.syntax--elixir .syntax--regexp.syntax--section,
+.syntax--source.syntax--elixir .syntax--regexp.syntax--string {
+  color: #ca1243;
+}
+.syntax--source.syntax--elixir .syntax--separator,
+.syntax--source.syntax--elixir .syntax--keyword.syntax--operator {
+  color: #986801;
+}
+.syntax--source.syntax--elixir .syntax--variable.syntax--constant {
+  color: #c18401;
+}
+.syntax--source.syntax--elixir .syntax--array,
+.syntax--source.syntax--elixir .syntax--scope,
+.syntax--source.syntax--elixir .syntax--section {
+  color: #696c77;
+}
+.syntax--source.syntax--gfm .syntax--markup {
+  -webkit-font-smoothing: auto;
+}
+.syntax--source.syntax--gfm .syntax--link .syntax--entity {
+  color: #4078f2;
+}
+.syntax--source.syntax--go .syntax--storage.syntax--type.syntax--string {
+  color: #a626a4;
+}
+.syntax--source.syntax--ini .syntax--keyword.syntax--other.syntax--definition.syntax--ini {
+  color: #e45649;
+}
+.syntax--source.syntax--java .syntax--storage.syntax--modifier.syntax--import {
+  color: #c18401;
+}
+.syntax--source.syntax--java .syntax--storage.syntax--type {
+  color: #c18401;
+}
+.syntax--source.syntax--java .syntax--keyword.syntax--operator.syntax--instanceof {
+  color: #a626a4;
+}
+.syntax--source.syntax--java-properties .syntax--meta.syntax--key-pair {
+  color: #e45649;
+}
+.syntax--source.syntax--java-properties .syntax--meta.syntax--key-pair > .syntax--punctuation {
+  color: #383a42;
+}
+.syntax--source.syntax--js .syntax--keyword.syntax--operator {
+  color: #0184bc;
+}
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--delete,
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--in,
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--of,
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--instanceof,
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--new,
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--typeof,
+.syntax--source.syntax--js .syntax--keyword.syntax--operator.syntax--void {
+  color: #a626a4;
+}
+.syntax--source.syntax--ts .syntax--keyword.syntax--operator {
+  color: #0184bc;
+}
+.syntax--source.syntax--flow .syntax--keyword.syntax--operator {
+  color: #0184bc;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--string.syntax--quoted.syntax--json {
+  color: #e45649;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--string.syntax--quoted.syntax--json > .syntax--punctuation.syntax--string {
+  color: #e45649;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--json,
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--array.syntax--json > .syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--json,
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--json > .syntax--punctuation,
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--array.syntax--json > .syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--json > .syntax--punctuation {
+  color: #50a14f;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--constant.syntax--language.syntax--json,
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--array.syntax--json > .syntax--constant.syntax--language.syntax--json {
+  color: #0184bc;
+}
+.syntax--ng.syntax--interpolation {
+  color: #e45649;
+}
+.syntax--ng.syntax--interpolation.syntax--begin,
+.syntax--ng.syntax--interpolation.syntax--end {
+  color: #4078f2;
+}
+.syntax--ng.syntax--interpolation .syntax--function {
+  color: #e45649;
+}
+.syntax--ng.syntax--interpolation .syntax--function.syntax--begin,
+.syntax--ng.syntax--interpolation .syntax--function.syntax--end {
+  color: #4078f2;
+}
+.syntax--ng.syntax--interpolation .syntax--bool {
+  color: #986801;
+}
+.syntax--ng.syntax--interpolation .syntax--bracket {
+  color: #383a42;
+}
+.syntax--ng.syntax--pipe,
+.syntax--ng.syntax--operator {
+  color: #383a42;
+}
+.syntax--ng.syntax--tag {
+  color: #0184bc;
+}
+.syntax--ng.syntax--attribute-with-value .syntax--attribute-name {
+  color: #c18401;
+}
+.syntax--ng.syntax--attribute-with-value .syntax--string {
+  color: #a626a4;
+}
+.syntax--ng.syntax--attribute-with-value .syntax--string.syntax--begin,
+.syntax--ng.syntax--attribute-with-value .syntax--string.syntax--end {
+  color: #383a42;
+}
+.syntax--source.syntax--ruby .syntax--constant.syntax--other.syntax--symbol > .syntax--punctuation {
+  color: inherit;
+}
+.syntax--source.syntax--php .syntax--class.syntax--bracket {
+  color: #383a42;
+}
+.syntax--source.syntax--python .syntax--keyword.syntax--operator.syntax--logical.syntax--python {
+  color: #a626a4;
+}
+.syntax--source.syntax--python .syntax--variable.syntax--parameter {
+  color: #986801;
+}
+</style>
+
+  </head>
+  <body>
+    <h1>Session 1 : Processes and a first taste of IPC</h1>
+<p>Razmig Kéchichian</p>
+<h3><em>Learning outcomes</em></h3>
+<p>The aim of this session is to familiarize you with:</p>
+<ul>
+<li>process creation tools in Python</li>
+<li>parent-child process relationships</li>
+<li>simple asynchronous interprocess communication via signals, and</li>
+<li>simple synchronous interprocess communication via ordinary pipes</li>
+</ul>
+<h2>I. Preliminaries (5-10 minutes)</h2>
+<h3>Organizing your code and organizing your time</h3>
+<p>Always consider organizing your source files in a directory hierarchy. As you know, such organization is mandatory if you intend to organize your Python modules into packages. Also consider the use of a version-control system, such as <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">git</code> to consolidate your work instead of simple but often error-prone archiving.
+Organize your time taking into consideration duration estimates given for each section. The aim of practice sessions is to discover as many notions and tools as possible. Do not get stuck in some place for the duration of the session leaving out later sections, you can go into the problematic section in depth later.</p>
+<h3>Running Python programs</h3>
+<p>Remember that you can run your Python programs on the command line in 2 ways. Say your program is contained in the source file <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">myscript.py</code>:</p>
+<ul>
+<li>You can pass the script to the Python interpreter directly along with any arguments it may need:<pre class="editor-colors lang-bash"><span class=""><span class="syntax--source syntax--shell"><span class="syntax--entity syntax--name syntax--function">login@hostame:~<span class="syntax--punctuation syntax--section syntax--embedded">$</span> <span class="syntax--variable syntax--other syntax--member">python3</span></span> myscript.py <span class="syntax--string">"bartzabel"</span> 666</span></span></pre>
+</li>
+<li>Or, you can make your script executable and run it directly. In this case you need to place the following line at the very beginning of your script to instruct the bash shell on where to look for your Python interpreter, the location of which may vary from a system to another, hence the call to the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">env</code> utility:<pre class="editor-colors lang-bash"><span class=""><span class="syntax--source syntax--shell"><span class="syntax--comment syntax--block">#!/usr/bin/env python3</span></span></span></pre>
+Then, give yourself and your group execution rights on the script and launch it:<pre class="editor-colors lang-bash"><span><span class="syntax--source syntax--shell"><span class="syntax--entity syntax--name syntax--function">login@hostame:~<span class="syntax--punctuation syntax--section syntax--embedded">$</span> <span class="syntax--variable syntax--other syntax--member">chmod</span></span> ug+x myscript.py</span></span>
+<span class=""><span class="syntax--source syntax--shell"><span class="syntax--entity syntax--name syntax--function">login@hostame:~<span class="syntax--punctuation syntax--section syntax--embedded">$</span> ./myscript.py</span> <span class="syntax--string">"bartzabel"</span> 666</span></span></pre>
+</li>
+</ul>
+<h3>Perusing documentation</h3>
+<p>Throughout the practice sessions, you will often be directed to documentation sections to read and code examples to examine. This material is often short and can be viewed and understood quickly, therefore you are strongly encouraged to take your time to do so.</p>
+<h3>Play with the code and elaborate solutions incrementally</h3>
+<p>Do take your time to test a new function or a class that you just discovered to make sure you understand how it works. Resist the urge to code your program in its entirety in one shot. Going about it incrementally with intermediate tests makes things easier and keeps bugs in control!</p>
+<h2>II. Processes (30-40 minutes)</h2>
+<p>Python process creation and associated tools of IPC and synchronization are defined in the standard module <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing</code>. Central to this module is the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Process</code> class defining the process abstraction along with its attributes and operations represented as methods. <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Process</code> allows you to create a new process in your Python program via 2 methods:</p>
+<ol>
+<li>Implementing the algorithm that you need to execute as a function and passing its name along with its arguments to the constructor of <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Process</code>, or</li>
+<li>subclassing <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Process</code> and defining its <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">run()</code> method to implement your algorithm.</li>
+</ol>
+<p>Here’s a runnable code example illustrating the first method.</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">from</span> multiprocessing <span class="syntax--keyword syntax--control">import</span> Process</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--storage syntax--type syntax--function">def</span> <span class="syntax--entity syntax--name syntax--function">greet</span>(<span class="syntax--variable syntax--parameter syntax--function">name</span>):</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"Hello,"</span>, name, <span class="syntax--string syntax--quoted">"!"</span>)</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">if</span> __name__ <span class="syntax--keyword syntax--operator">==</span> <span class="syntax--string syntax--quoted">"__main__"</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>p <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--entity syntax--name syntax--function">Process</span>(<span class="syntax--variable syntax--parameter syntax--function">target</span><span class="syntax--keyword syntax--operator">=</span>greet, <span class="syntax--variable syntax--parameter syntax--function">args</span><span class="syntax--keyword syntax--operator">=</span>(<span class="syntax--string syntax--quoted">"Kitty"</span>,))</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>p.<span class="syntax--entity syntax--name syntax--function">start</span>()</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>p.<span class="syntax--entity syntax--name syntax--function">join</span>()</span></span></pre>
+<p>And here’s the same example, illustrating the second method.</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">from</span> multiprocessing <span class="syntax--keyword syntax--control">import</span> Process</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--storage syntax--type syntax--class">class</span> <span class="syntax--entity syntax--name syntax--type syntax--class">Greet</span>(<span class="syntax--entity syntax--other syntax--inherited-class">Process</span>):</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--storage syntax--type syntax--function">def</span> <span class="syntax--entity syntax--name syntax--function">__init__</span>(<span class="syntax--variable syntax--parameter syntax--function">self</span>, <span class="syntax--variable syntax--parameter syntax--function">name</span>):</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span><span class="syntax--support syntax--function">super</span>().<span class="syntax--entity syntax--name syntax--function">__init__</span>()</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span>self.<span class="syntax--variable syntax--other syntax--object syntax--property">name</span> <span class="syntax--keyword syntax--operator">=</span> name</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--storage syntax--type syntax--function">def</span> <span class="syntax--entity syntax--name syntax--function">run</span>(<span class="syntax--variable syntax--parameter syntax--function">self</span>):</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"Hello,"</span>, self.<span class="syntax--variable syntax--other syntax--object syntax--property">name</span>, <span class="syntax--string syntax--quoted">"!"</span>)</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">if</span> __name__ <span class="syntax--keyword syntax--operator">==</span> <span class="syntax--string syntax--quoted">"__main__"</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>p <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--entity syntax--name syntax--function">Greet</span>(<span class="syntax--string syntax--quoted">"Kitty"</span>)</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>p.<span class="syntax--entity syntax--name syntax--function">start</span>()</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>p.<span class="syntax--entity syntax--name syntax--function">join</span>()</span></span></pre>
+<p>Two things have to be taken into consideration:</p>
+<ul>
+<li>When you subclass the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Process</code> class, in your constructor you must first invoke the constructor of the parent class, hence the line <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">super().__init__()</code>.</li>
+<li>In either way of process creation, protecting the entry point of the program by <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">if __name__ == "__main__":</code> is <strong>mandatory</strong>. This is to make sure that the main module can be safely imported by a new Python interpreter without causing unintended side effects, such a starting a new process. Have a look at <a href="https://docs.python.org/3/tutorial/modules.html#executing-modules-as-scripts">this description</a> of how to execute Python modules as scripts if you’re not comfortable with the idea.</li>
+</ul>
+<p>Now’s a great time to have a quick look on the <a href="https://docs.python.org/3/library/multiprocessing.html#reference">documentation of the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Process</code> class</a> to see if you guessed right what its methods <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">start()</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">join()</code> do, and to find out about its other members.</p>
+<p>Before we tackle our first exercise, it is interesting to point out that the standard module <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">os</code>, which provides an interface to the underlying operating system, defines <a href="https://docs.python.org/3/library/os.html#process-parameters">a host of useful methods for use with processes</a>, such as <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">getpid()</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">getppid()</code> which return the PID of the calling process and the PID of its parent process respectively. However, not all of the facilities defined in this module are available on all platforms.</p>
+<h3><em>Exercise 1 : parent with worker child</em></h3>
+<p>The Fibonacci sequence is the series of numbers 0, 1, 1, 2, 3, 5, 8, …<br>
+Formally, it can be expressed as:</p>
+<span class="math display-math"><script type="math/tex; mode=display">\begin{align}
+fib_0 & = 0\\
+fib_1 & = 1\\
+fib_n & = fib_{n−1} + fib_{n−2}
+\end{align}
+</script></span>
+<ul>
+<li>Write a Python program that that generates the Fibonacci sequence in the child process. The index of the sequence element will be provided at the command line. For example, if 5 is provided, the first six numbers in the Fibonacci sequence will be output by the child process. Because the parent and child processes have their own copies of data, it will be necessary for one of them, the child in this case, to output the sequence. Make sure that the parent waits for the child process to complete before exiting the program. You may either define a process class by inheriting from <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing.Process</code>, or define a function and provide it as the target to be executed along with its parameter to <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing.Process()</code>.</li>
+<li>Perform necessary error checking to ensure that a non-negative number is passed on the command line. Remember that the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">argv</code> member of the standard module <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">sys</code> captures command-line arguments as <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">str</code> objects. You can convert a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">str</code> object into an <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">int</code> by passing it to the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">int()</code> constructor and checking for possible exceptions.</li>
+<li>Put the child process to sleep via <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">time.sleep(n)</code> for <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">n</code> seconds and locate the entries of both processes in the output of the command <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">ps ax</code>, issued in another terminal. Call <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">os.getpid()</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">os.getppid()</code> in the appropriate places to check the process and parent process PIDs respectively and verify with the output of the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">ps</code> command.</li>
+</ul>
+<h2>III. Signals (20-30 minutes)</h2>
+<p>Signals are a useful means for asynchronous communication with processes, and often for interprocess communication as well, although more limited than usual message passing or shared memory IPC. Note that signals are available on Unix-like systems only. In essence, a signal is a notification sent to a process given its PID, to which the process responds by calling a signal handler function implementing a default or a user-defined behavior.</p>
+<p>There are different types of signals, to glance through them, have a look on the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">signal</code> manpage, <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">man 7 signal</code>, or consult <a href="http://man7.org/linux/man-pages/man7/signal.7.html">this page</a> if manpages aren’t available on your system. Some signals have special meanings, for example <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">SIGTERM</code> is sent to a process to request its proper termination, <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">SIGKILL</code> kills a process immediately without allowing it to cleanup its resources, <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">SIGINT</code> delivers a keyboard interrupt, an so on. Some signals, such as <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">SIGUSR1</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">SIGUSR2</code>, are available for users to implement a desired behavior.</p>
+<p>Let’s begin with a rather simple example. Write this 2-liner program and have it run in a terminal.</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">while</span> <span class="syntax--constant syntax--language">True</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">  </span><span class="syntax--keyword syntax--control">pass</span></span></span></pre>
+<p>In a separate terminal, issue the command <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">ps a</code> and take note of the PID of the process you just launched. Now send a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">SIGKILL</code> to it by issuing <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">kill -s SIGKILL PID</code> where PID is the actual numeric PID of the process. Observe what happens in the first terminal. Re-run the the Python program, get its new PID, and this time send it a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">SIGINT</code>. Re-run the program for the last time, and this time type <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Ctrl+C</code> in the first terminal. You will notice that Python reports keyboard interrupts by raising a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">KeyboardInterrupt</code> exception.</p>
+<p>You can intercept a signal and decide what to upon its arrival by defining a signal handler function. You then install this signal handler for the given signal. Let’s develop the above simple program to intercept <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">SIGINT</code> and print a smiley face instead of terminating the program, which is the default behavior upon receiving the signal. The code follows.</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">import</span> signal</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--storage syntax--type syntax--function">def</span> <span class="syntax--entity syntax--name syntax--function">handler</span>(<span class="syntax--variable syntax--parameter syntax--function">sig</span>, <span class="syntax--variable syntax--parameter syntax--function">frame</span>):</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">if</span> sig <span class="syntax--keyword syntax--operator">==</span> signal.<span class="syntax--variable syntax--other syntax--object syntax--property">SIGINT</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">        </span><span class="syntax--support syntax--function">print</span>(<span class="syntax--string syntax--quoted">"}:-)"</span>)</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python">signal.<span class="syntax--entity syntax--name syntax--function">signal</span>(signal.<span class="syntax--variable syntax--other syntax--object syntax--property">SIGINT</span>, handler)</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">while</span> <span class="syntax--constant syntax--language">True</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--keyword syntax--control">pass</span></span></span></pre>
+<p>As you have guessed, Python signal handling routines are defined in the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">signal</code> module. Two remarks are in order:</p>
+<ul>
+<li>A signal handler function can be installed for a given signal via the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">signal.signal()</code> method. This method can also be used to ignore a signal or to redefine its default behavior. Find out how by looking at its <a href="https://docs.python.org/3/library/signal.html#signal.signal">documentation</a>. In general, it is not a good idea to ignore or to redefine signals having to do with system-process interaction such as <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">SIGTERM</code>, <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">SIGKILL</code>, etc.</li>
+<li>The signal handler is a normal Python function that is called when the signal is received by the process. The first argument passed is the signal number, which allows you to use the same handler for different signals. The <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">signal</code> module provides signals as uppercase constants. You can safely ignore the second argument to the handler function.
+Go ahead and test the new program sending it a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">SIGINT</code>, then terminate it.</li>
+</ul>
+<p>Before moving to the second exercise, let us stress on the fact that a process must be alive for it to be able to receive a signal. Without the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">while</code> loop, the process would have terminated without having the chance of receiving a signal. An alternative, and a much better way, is to call the method <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">signal.pause()</code> to suspend the execution of the process until the signal is received making sure the appropriate handle is called.</p>
+<h3><em>Exercise 2 : signal exchange</em></h3>
+<p>Write a Python program to implement the following scenario. A parent process creates a child and waits for its termination. After sleeping for 5 seconds, the child process sends a signal to its parent. Upon intercepting the signal, the parent kills its child. Make sure to use a user-available signal for child-parent communication. To send a signal to a process given its PID, you can call the method <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">os.kill()</code>. Have a look on its documentation.</p>
+<h2>IV. Ordinary pipes (20-30 minutes)</h2>
+<p>The Python <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing</code> module provides ordinary (sometimes called unnamed) pipes to allow a pair of processes to communicate via the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing.Pipe()</code> method. This method actually returns 2 <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing.Connection</code> objects connected through a pipe which is duplex (two-way) by default.</p>
+<p>You are required to examine and understand <a href="https://docs.python.org/3/library/multiprocessing.html#exchanging-objects-between-processes">this code example</a> illustrating a simple one-way use of a pipe. Have a look at <a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Pipe">the documentation of the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Pipe()</code> method</a>, then look into <a href="https://docs.python.org/3/library/multiprocessing.html#connection-objects">the documentation of the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Connection</code> class</a>, paying attention to its methods <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">send()</code>, <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">recv()</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">close()</code>. Make sure to understand that a pair of processes have to use different ends of an ordinary pipe at the same time, using the same end of the pipe at the same time causes data corruption.</p>
+<p>Before moving to the last exercise, let us note here that even though ordinary pipes are often used by a pair of process in a parent-child configuration, they could also be used between two child processes created by the same parent. This is because file descriptors underlying <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Connection</code> objects used to establish pipe communications are inherited in child processes. Indeed, the child process is an exact duplicate of the parent process except for few things. On a Unix-like system, you can find out what else a child process inherits from its parent by consulting the manpage for the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">fork()</code> system call.</p>
+<h3><em>Exercise 3 : two-way ordinary pipe</em></h3>
+<p>Write a Python program to take advantage of the bidirectional nature of ordinary pipes for the following situation. A parent process prompts the user (you may use the built-in method <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">input()</code> for that) and reads a phrase from the terminal. It sends the phrase to its child process which reverses it and sends it back to its parent, the parent displays the reversed phrase. First, implement and test the program for a single round-trip communication, then extend it to accept an arbitrary number of communications with a stop phrase or word such as “end”. Always make sure to call the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">close()</code> method on pipe connections once the program is done with them to release resources associated with <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Connection</code> objects.</p>
+<h2>V. Going further: named pipes</h2>
+<p>We just studied communication among parent-child processes via ordinary pipes. However, sometimes it is necessary to
+perform communication between unrelated processes (processes with different parents). If the use of shared memory isn’t desirable, named pipes can be resorted to. These are communication mechanisms which use file descriptors associated with special files on the file system that implement a First-In First-Out (FIFO) scheme for writing and reading data. Recall that file descriptors for ordinary pipes are created in memory.
+You are autonomous in your exploration of named pipes. Python routines for creating and communicating via named pipes are defined in the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">os</code> module. Note however that these routines are available on Unix-like systems only.</p>
+
+  </body>
+</html>

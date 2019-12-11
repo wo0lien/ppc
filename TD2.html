@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8" />
+      <title>TD2</title>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: [],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+    },
+    showMathMenu: false
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js">
+</script>
+      <style>.markdown-preview:not([data-use-github-style]) { padding: 2em; font-size: 1.2em; color: rgb(85, 85, 85); overflow: auto; background-color: rgb(255, 255, 255); }
+.markdown-preview:not([data-use-github-style]) > :first-child { margin-top: 0px; }
+.markdown-preview:not([data-use-github-style]) h1, .markdown-preview:not([data-use-github-style]) h2, .markdown-preview:not([data-use-github-style]) h3, .markdown-preview:not([data-use-github-style]) h4, .markdown-preview:not([data-use-github-style]) h5, .markdown-preview:not([data-use-github-style]) h6 { line-height: 1.2; margin-top: 1.5em; margin-bottom: 0.5em; color: rgb(3, 3, 3); }
+.markdown-preview:not([data-use-github-style]) h1 { font-size: 2.4em; font-weight: 300; }
+.markdown-preview:not([data-use-github-style]) h2 { font-size: 1.8em; font-weight: 400; }
+.markdown-preview:not([data-use-github-style]) h3 { font-size: 1.5em; font-weight: 500; }
+.markdown-preview:not([data-use-github-style]) h4 { font-size: 1.2em; font-weight: 600; }
+.markdown-preview:not([data-use-github-style]) h5 { font-size: 1.1em; font-weight: 600; }
+.markdown-preview:not([data-use-github-style]) h6 { font-size: 1em; font-weight: 600; }
+.markdown-preview:not([data-use-github-style]) strong { color: rgb(3, 3, 3); }
+.markdown-preview:not([data-use-github-style]) del { color: rgb(126, 126, 126); }
+.markdown-preview:not([data-use-github-style]) a, .markdown-preview:not([data-use-github-style]) a code { color: rgb(0, 0, 0); }
+.markdown-preview:not([data-use-github-style]) img { max-width: 100%; }
+.markdown-preview:not([data-use-github-style]) > p { margin-top: 0px; margin-bottom: 1.5em; }
+.markdown-preview:not([data-use-github-style]) > ul, .markdown-preview:not([data-use-github-style]) > ol { margin-bottom: 1.5em; }
+.markdown-preview:not([data-use-github-style]) blockquote { margin: 1.5em 0px; font-size: inherit; color: rgb(126, 126, 126); border-color: rgb(214, 214, 214); border-width: 4px; }
+.markdown-preview:not([data-use-github-style]) hr { margin: 3em 0px; border-top-width: 2px; border-top-style: dashed; border-top-color: rgb(214, 214, 214); background: none; }
+.markdown-preview:not([data-use-github-style]) table { margin: 1.5em 0px; }
+.markdown-preview:not([data-use-github-style]) th { color: rgb(3, 3, 3); }
+.markdown-preview:not([data-use-github-style]) th, .markdown-preview:not([data-use-github-style]) td { padding: 0.66em 1em; border: 1px solid rgb(214, 214, 214); }
+.markdown-preview:not([data-use-github-style]) pre, .markdown-preview:not([data-use-github-style]) code { color: rgb(3, 3, 3); background-color: rgb(240, 240, 240); }
+.markdown-preview:not([data-use-github-style]) pre, .markdown-preview:not([data-use-github-style]) pre.editor-colors { margin: 1.5em 0px; padding: 1em; font-size: 0.92em; border-radius: 3px; background-color: rgb(245, 245, 245); }
+.markdown-preview:not([data-use-github-style]) kbd { color: rgb(3, 3, 3); border-width: 1px 1px 2px; border-style: solid; border-color: rgb(214, 214, 214) rgb(214, 214, 214) rgb(199, 199, 199); background-color: rgb(240, 240, 240); }
+.markdown-preview[data-use-github-style] { font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif; line-height: 1.6; word-wrap: break-word; padding: 30px; font-size: 16px; color: rgb(51, 51, 51); overflow: scroll; background-color: rgb(255, 255, 255); }
+.markdown-preview[data-use-github-style] > :first-child { margin-top: 0px !important; }
+.markdown-preview[data-use-github-style] > :last-child { margin-bottom: 0px !important; }
+.markdown-preview[data-use-github-style] a:not([href]) { color: inherit; text-decoration: none; }
+.markdown-preview[data-use-github-style] .absent { color: rgb(204, 0, 0); }
+.markdown-preview[data-use-github-style] .anchor { position: absolute; top: 0px; left: 0px; display: block; padding-right: 6px; padding-left: 30px; margin-left: -30px; }
+.markdown-preview[data-use-github-style] .anchor:focus { outline: none; }
+.markdown-preview[data-use-github-style] h1, .markdown-preview[data-use-github-style] h2, .markdown-preview[data-use-github-style] h3, .markdown-preview[data-use-github-style] h4, .markdown-preview[data-use-github-style] h5, .markdown-preview[data-use-github-style] h6 { position: relative; margin-top: 1em; margin-bottom: 16px; font-weight: bold; line-height: 1.4; }
+.markdown-preview[data-use-github-style] h1 .octicon-link, .markdown-preview[data-use-github-style] h2 .octicon-link, .markdown-preview[data-use-github-style] h3 .octicon-link, .markdown-preview[data-use-github-style] h4 .octicon-link, .markdown-preview[data-use-github-style] h5 .octicon-link, .markdown-preview[data-use-github-style] h6 .octicon-link { display: none; color: rgb(0, 0, 0); vertical-align: middle; }
+.markdown-preview[data-use-github-style] h1:hover .anchor, .markdown-preview[data-use-github-style] h2:hover .anchor, .markdown-preview[data-use-github-style] h3:hover .anchor, .markdown-preview[data-use-github-style] h4:hover .anchor, .markdown-preview[data-use-github-style] h5:hover .anchor, .markdown-preview[data-use-github-style] h6:hover .anchor { padding-left: 8px; margin-left: -30px; text-decoration: none; }
+.markdown-preview[data-use-github-style] h1:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h2:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h3:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h4:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h5:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h6:hover .anchor .octicon-link { display: inline-block; }
+.markdown-preview[data-use-github-style] h1 tt, .markdown-preview[data-use-github-style] h2 tt, .markdown-preview[data-use-github-style] h3 tt, .markdown-preview[data-use-github-style] h4 tt, .markdown-preview[data-use-github-style] h5 tt, .markdown-preview[data-use-github-style] h6 tt, .markdown-preview[data-use-github-style] h1 code, .markdown-preview[data-use-github-style] h2 code, .markdown-preview[data-use-github-style] h3 code, .markdown-preview[data-use-github-style] h4 code, .markdown-preview[data-use-github-style] h5 code, .markdown-preview[data-use-github-style] h6 code { font-size: inherit; }
+.markdown-preview[data-use-github-style] h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(238, 238, 238); }
+.markdown-preview[data-use-github-style] h1 .anchor { line-height: 1; }
+.markdown-preview[data-use-github-style] h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(238, 238, 238); }
+.markdown-preview[data-use-github-style] h2 .anchor { line-height: 1; }
+.markdown-preview[data-use-github-style] h3 { font-size: 1.5em; line-height: 1.43; }
+.markdown-preview[data-use-github-style] h3 .anchor { line-height: 1.2; }
+.markdown-preview[data-use-github-style] h4 { font-size: 1.25em; }
+.markdown-preview[data-use-github-style] h4 .anchor { line-height: 1.2; }
+.markdown-preview[data-use-github-style] h5 { font-size: 1em; }
+.markdown-preview[data-use-github-style] h5 .anchor { line-height: 1.1; }
+.markdown-preview[data-use-github-style] h6 { font-size: 1em; color: rgb(119, 119, 119); }
+.markdown-preview[data-use-github-style] h6 .anchor { line-height: 1.1; }
+.markdown-preview[data-use-github-style] p, .markdown-preview[data-use-github-style] blockquote, .markdown-preview[data-use-github-style] ul, .markdown-preview[data-use-github-style] ol, .markdown-preview[data-use-github-style] dl, .markdown-preview[data-use-github-style] table, .markdown-preview[data-use-github-style] pre { margin-top: 0px; margin-bottom: 16px; }
+.markdown-preview[data-use-github-style] hr { height: 4px; padding: 0px; margin: 16px 0px; border: 0px none; background-color: rgb(231, 231, 231); }
+.markdown-preview[data-use-github-style] ul, .markdown-preview[data-use-github-style] ol { padding-left: 2em; }
+.markdown-preview[data-use-github-style] ul.no-list, .markdown-preview[data-use-github-style] ol.no-list { padding: 0px; list-style-type: none; }
+.markdown-preview[data-use-github-style] ul ul, .markdown-preview[data-use-github-style] ul ol, .markdown-preview[data-use-github-style] ol ol, .markdown-preview[data-use-github-style] ol ul { margin-top: 0px; margin-bottom: 0px; }
+.markdown-preview[data-use-github-style] li > p { margin-top: 16px; }
+.markdown-preview[data-use-github-style] dl { padding: 0px; }
+.markdown-preview[data-use-github-style] dl dt { padding: 0px; margin-top: 16px; font-size: 1em; font-style: italic; font-weight: bold; }
+.markdown-preview[data-use-github-style] dl dd { padding: 0px 16px; margin-bottom: 16px; }
+.markdown-preview[data-use-github-style] blockquote { padding: 0px 15px; color: rgb(119, 119, 119); border-left-width: 4px; border-left-style: solid; border-left-color: rgb(221, 221, 221); }
+.markdown-preview[data-use-github-style] blockquote > :first-child { margin-top: 0px; }
+.markdown-preview[data-use-github-style] blockquote > :last-child { margin-bottom: 0px; }
+.markdown-preview[data-use-github-style] table { display: block; width: 100%; overflow: auto; word-break: keep-all; }
+.markdown-preview[data-use-github-style] table th { font-weight: bold; }
+.markdown-preview[data-use-github-style] table th, .markdown-preview[data-use-github-style] table td { padding: 6px 13px; border: 1px solid rgb(221, 221, 221); }
+.markdown-preview[data-use-github-style] table tr { border-top-width: 1px; border-top-style: solid; border-top-color: rgb(204, 204, 204); background-color: rgb(255, 255, 255); }
+.markdown-preview[data-use-github-style] table tr:nth-child(2n) { background-color: rgb(248, 248, 248); }
+.markdown-preview[data-use-github-style] img { max-width: 100%; box-sizing: border-box; }
+.markdown-preview[data-use-github-style] .emoji { max-width: none; }
+.markdown-preview[data-use-github-style] span.frame { display: block; overflow: hidden; }
+.markdown-preview[data-use-github-style] span.frame > span { display: block; float: left; width: auto; padding: 7px; margin: 13px 0px 0px; overflow: hidden; border: 1px solid rgb(221, 221, 221); }
+.markdown-preview[data-use-github-style] span.frame span img { display: block; float: left; }
+.markdown-preview[data-use-github-style] span.frame span span { display: block; padding: 5px 0px 0px; clear: both; color: rgb(51, 51, 51); }
+.markdown-preview[data-use-github-style] span.align-center { display: block; overflow: hidden; clear: both; }
+.markdown-preview[data-use-github-style] span.align-center > span { display: block; margin: 13px auto 0px; overflow: hidden; text-align: center; }
+.markdown-preview[data-use-github-style] span.align-center span img { margin: 0px auto; text-align: center; }
+.markdown-preview[data-use-github-style] span.align-right { display: block; overflow: hidden; clear: both; }
+.markdown-preview[data-use-github-style] span.align-right > span { display: block; margin: 13px 0px 0px; overflow: hidden; text-align: right; }
+.markdown-preview[data-use-github-style] span.align-right span img { margin: 0px; text-align: right; }
+.markdown-preview[data-use-github-style] span.float-left { display: block; float: left; margin-right: 13px; overflow: hidden; }
+.markdown-preview[data-use-github-style] span.float-left span { margin: 13px 0px 0px; }
+.markdown-preview[data-use-github-style] span.float-right { display: block; float: right; margin-left: 13px; overflow: hidden; }
+.markdown-preview[data-use-github-style] span.float-right > span { display: block; margin: 13px auto 0px; overflow: hidden; text-align: right; }
+.markdown-preview[data-use-github-style] code, .markdown-preview[data-use-github-style] tt { padding: 0.2em 0px; margin: 0px; font-size: 85%; border-radius: 3px; background-color: rgba(0, 0, 0, 0.0392157); }
+.markdown-preview[data-use-github-style] code::before, .markdown-preview[data-use-github-style] tt::before, .markdown-preview[data-use-github-style] code::after, .markdown-preview[data-use-github-style] tt::after { letter-spacing: -0.2em; content: " "; }
+.markdown-preview[data-use-github-style] code br, .markdown-preview[data-use-github-style] tt br { display: none; }
+.markdown-preview[data-use-github-style] del code { text-decoration: inherit; }
+.markdown-preview[data-use-github-style] pre > code { padding: 0px; margin: 0px; font-size: 100%; word-break: normal; white-space: pre; border: 0px; background: transparent; }
+.markdown-preview[data-use-github-style] .highlight { margin-bottom: 16px; }
+.markdown-preview[data-use-github-style] .highlight pre, .markdown-preview[data-use-github-style] pre { padding: 16px; overflow: auto; font-size: 85%; line-height: 1.45; border-radius: 3px; background-color: rgb(247, 247, 247); }
+.markdown-preview[data-use-github-style] .highlight pre { margin-bottom: 0px; word-break: normal; }
+.markdown-preview[data-use-github-style] pre { word-wrap: normal; }
+.markdown-preview[data-use-github-style] pre code, .markdown-preview[data-use-github-style] pre tt { display: inline; max-width: initial; padding: 0px; margin: 0px; overflow: initial; line-height: inherit; word-wrap: normal; border: 0px; background-color: transparent; }
+.markdown-preview[data-use-github-style] pre code::before, .markdown-preview[data-use-github-style] pre tt::before, .markdown-preview[data-use-github-style] pre code::after, .markdown-preview[data-use-github-style] pre tt::after { content: normal; }
+.markdown-preview[data-use-github-style] kbd { display: inline-block; padding: 3px 5px; font-size: 11px; line-height: 10px; color: rgb(85, 85, 85); vertical-align: middle; border-style: solid; border-width: 1px; border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(187, 187, 187); border-radius: 3px; box-shadow: rgb(187, 187, 187) 0px -1px 0px inset; background-color: rgb(252, 252, 252); }
+.markdown-preview[data-use-github-style] a { color: rgb(51, 122, 183); }
+.markdown-preview[data-use-github-style] pre, .markdown-preview[data-use-github-style] code { color: inherit; }
+.markdown-preview[data-use-github-style] pre, .markdown-preview[data-use-github-style] pre.editor-colors { padding: 0.8em 1em; margin-bottom: 1em; font-size: 0.85em; border-radius: 4px; overflow: auto; }
+.scrollbars-visible-always .markdown-preview pre.editor-colors::shadow .vertical-scrollbar, .scrollbars-visible-always .markdown-preview pre.editor-colors::shadow .horizontal-scrollbar { visibility: hidden; }
+.scrollbars-visible-always .markdown-preview pre.editor-colors:hover::shadow .vertical-scrollbar, .scrollbars-visible-always .markdown-preview pre.editor-colors:hover::shadow .horizontal-scrollbar { visibility: visible; }
+.markdown-preview del { text-decoration: none; position: relative; }
+.markdown-preview del::after { border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: black; content: ""; left: 0px; position: absolute; right: 0px; top: 50%; }
+.markdown-preview .flash { animation: flash 1s ease-out 1; outline: rgba(255, 0, 0, 0) solid 1px; }
+.markdown-preview .flash:not(li) { display: block; }
+.bracket-matcher .region {
+  border-bottom: 1px dotted lime;
+  position: absolute;
+}
+
+.spell-check-misspelling .region {
+  border-bottom: 2px dotted rgba(255, 51, 51, 0.75);
+}
+
+pre.editor-colors,
+.host {
+  background-color: #ffffff;
+  color: #555555;
+}
+pre.editor-colors .invisible-character,
+.host .invisible-character {
+  color: rgba(85, 85, 85, 0.2);
+}
+pre.editor-colors .indent-guide,
+.host .indent-guide {
+  color: rgba(85, 85, 85, 0.2);
+}
+pre.editor-colors .wrap-guide,
+.host .wrap-guide {
+  background-color: rgba(85, 85, 85, 0.2);
+}
+pre.editor-colors .gutter,
+.host .gutter {
+  color: #555555;
+  background: #ffffff;
+}
+pre.editor-colors .gutter .line-number.folded,
+.host .gutter .line-number.folded,
+pre.editor-colors .gutter .line-number:after,
+.host .gutter .line-number:after,
+pre.editor-colors .fold-marker:after,
+.host .fold-marker:after {
+  color: #e87b00;
+}
+pre.editor-colors .invisible,
+.host .invisible {
+  color: #555;
+}
+pre.editor-colors .selection .region,
+.host .selection .region {
+  background-color: #e1e1e1;
+}
+pre.editor-colors.is-focused .cursor,
+.host.is-focused .cursor {
+  border-color: #000000;
+}
+pre.editor-colors.is-focused .selection .region,
+.host.is-focused .selection .region {
+  background-color: #afc4da;
+}
+pre.editor-colors.is-focused .line-number.cursor-line-no-selection,
+.host.is-focused .line-number.cursor-line-no-selection,
+pre.editor-colors.is-focused .line.cursor-line,
+.host.is-focused .line.cursor-line {
+  background-color: rgba(255, 255, 134, 0.34);
+}
+pre.editor-colors .source.gfm,
+.host .source.gfm {
+  color: #444;
+}
+pre.editor-colors .gfm .markup.heading,
+.host .gfm .markup.heading {
+  color: #111;
+}
+pre.editor-colors .gfm .link,
+.host .gfm .link {
+  color: #888;
+}
+pre.editor-colors .gfm .variable.list,
+.host .gfm .variable.list {
+  color: #888;
+}
+pre.editor-colors .markdown .paragraph,
+.host .markdown .paragraph {
+  color: #444;
+}
+pre.editor-colors .markdown .heading,
+.host .markdown .heading {
+  color: #111;
+}
+pre.editor-colors .markdown .link,
+.host .markdown .link {
+  color: #888;
+}
+pre.editor-colors .markdown .link .string,
+.host .markdown .link .string {
+  color: #888;
+}
+.host(.is-focused) .cursor {
+  border-color: #000000;
+}
+.host(.is-focused) .selection .region {
+  background-color: #afc4da;
+}
+.host(.is-focused) .line-number.cursor-line-no-selection,
+.host(.is-focused) .line.cursor-line {
+  background-color: rgba(255, 255, 134, 0.34);
+}
+.comment {
+  color: #999988;
+  font-style: italic;
+}
+.string {
+  color: #D14;
+}
+.string .source,
+.string .meta.embedded.line {
+  color: #5A5A5A;
+}
+.string .punctuation.section.embedded {
+  color: #920B2D;
+}
+.string .punctuation.section.embedded .source {
+  color: #920B2D;
+}
+.constant.numeric {
+  color: #D14;
+}
+.constant.language {
+  color: #606aa1;
+}
+.constant.character,
+.constant.other {
+  color: #606aa1;
+}
+.constant.symbol {
+  color: #990073;
+}
+.constant.numeric.line-number.find-in-files .match {
+  color: rgba(143, 190, 0, 0.63);
+}
+.variable {
+  color: #008080;
+}
+.variable.parameter {
+  color: #606aa1;
+}
+.keyword {
+  color: #222;
+  font-weight: bold;
+}
+.keyword.unit {
+  color: #445588;
+}
+.keyword.special-method {
+  color: #0086B3;
+}
+.storage {
+  color: #222;
+}
+.storage.type {
+  color: #222;
+}
+.entity.name.class {
+  text-decoration: underline;
+  color: #606aa1;
+}
+.entity.other.inherited-class {
+  text-decoration: underline;
+  color: #606aa1;
+}
+.entity.name.function {
+  color: #900;
+}
+.entity.name.tag {
+  color: #008080;
+}
+.entity.other.attribute-name {
+  color: #458;
+  font-weight: bold;
+}
+.entity.name.filename.find-in-files {
+  color: #E6DB74;
+}
+.support.constant,
+.support.function,
+.support.type {
+  color: #458;
+}
+.support.class {
+  color: #008080;
+}
+.invalid {
+  color: #F8F8F0;
+  background-color: #00A8C6;
+}
+.invalid.deprecated {
+  color: #F8F8F0;
+  background-color: #8FBE00;
+}
+.meta.structure.dictionary.json > .string.quoted.double.json,
+.meta.structure.dictionary.json > .string.quoted.double.json .punctuation.string {
+  color: #000080;
+}
+.meta.structure.dictionary.value.json > .string.quoted.double.json {
+  color: #d14;
+}
+.meta.diff,
+.meta.diff.header {
+  color: #75715E;
+}
+.css.support.property-name {
+  font-weight: bold;
+  color: #333;
+}
+.css.constant {
+  color: #099;
+}
+.bracket-matcher .region {
+  background-color: #C9C9C9;
+  opacity: .7;
+  border-bottom: 0 none;
+}
+</style>
+  </head>
+  <body class='markdown-preview'><h1>Session 2 : Interprocess communication</h1>
+<p>Razmig Kéchichian</p>
+<h3><em>Learning outcomes</em></h3>
+<p>The aim of this session is to familiarize you with:</p>
+<ul>
+<li>sharing state between processes (shared memory), and</li>
+<li>System V-style message passing.</li>
+</ul>
+<h2>I. Sharing state</h2>
+<p>The Python <a href="https://docs.python.org/3/library/multiprocessing.html#programming-guidelines">concurrent programming guidelines</a> advice avoiding shared state between processes as much as possible. They suggest using pipes and queues (not to be confused with message queues both of which we’ll cover later) instead. The reason is that such shared state often has to be manually synchronized to guard against <em>race conditions</em>, such as simultaneous writes and reads which lead to data corruption. Nevertheless, shared sate can sometimes be useful for faster and more convenient interprocess communication, especially when larger chunks of data are involved.</p>
+<p>Python provides a number of ways to create and use shared data, the simplest of those are the classes <code>Value</code> and <code>Array</code>, defined in the <code>multiprocessing</code> module, which respectively represent scalar and fixed-size array data of predefined type, allocated from shared memory. The following program illustrates their use.</p>
+<pre class="editor-colors lang-python"><div class="line"><span class="source python"><span class="keyword control import from python"><span>from</span></span><span>&nbsp;</span><span>multiprocessing</span><span>&nbsp;</span><span class="keyword control import python"><span>import</span></span><span>&nbsp;</span><span>Process</span><span>,&nbsp;</span><span>Value</span><span>,&nbsp;</span><span>Array</span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span class="meta function python"><span class="storage type function python"><span>def</span></span><span>&nbsp;</span><span class="entity name function python"><span>f</span></span><span class="punctuation definition parameters begin python"><span>(</span></span><span class="meta function parameters python"><span class="variable parameter function python"><span>n</span></span><span class="punctuation separator parameters python"><span>,</span></span><span>&nbsp;</span><span class="variable parameter function python"><span>a</span></span></span><span class="punctuation definition parameters end python"><span>)</span></span><span class="punctuation section function begin python"><span>:</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>n</span><span>.</span><span>value</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="constant numeric float python"><span>3.1415927</span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword control repeat python"><span>for</span></span><span>&nbsp;</span><span>i</span><span>&nbsp;</span><span class="keyword operator logical python"><span>in</span></span><span>&nbsp;</span><span class="meta function-call python"><span class="support function builtin python"><span>range</span></span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span class="meta function-call python"><span class="support function builtin python"><span>len</span></span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span>a</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span><span class="punctuation definition arguments end python"><span>)</span></span></span><span>:</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta item-access python"><span>a</span><span class="punctuation definition arguments begin python"><span>[</span></span><span class="meta item-access arguments python"><span>i</span></span><span class="punctuation definition arguments end python"><span>]</span></span></span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="keyword operator arithmetic python"><span>-</span></span><span class="meta item-access python"><span>a</span><span class="punctuation definition arguments begin python"><span>[</span></span><span class="meta item-access arguments python"><span>i</span></span><span class="punctuation definition arguments end python"><span>]</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span class="keyword control conditional python"><span>if</span></span><span>&nbsp;</span><span class="support variable magic python"><span>__name__</span></span><span>&nbsp;</span><span class="keyword operator comparison python"><span>==</span></span><span>&nbsp;</span><span class="string quoted single single-line python"><span class="punctuation definition string begin python"><span>&#39;</span></span><span>__main__</span><span class="punctuation definition string end python"><span>&#39;</span></span></span><span>:</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>number</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span>Value</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span class="string quoted single single-line python"><span class="punctuation definition string begin python"><span>&#39;</span></span><span>d</span><span class="punctuation definition string end python"><span>&#39;</span></span></span><span>,&nbsp;</span><span class="constant numeric float python"><span>0.0</span></span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>vector</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span>Array</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span class="string quoted single single-line python"><span class="punctuation definition string begin python"><span>&#39;</span></span><span>i</span><span class="punctuation definition string end python"><span>&#39;</span></span></span><span>,&nbsp;</span><span class="meta function-call python"><span class="support function builtin python"><span>range</span></span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span class="constant numeric integer decimal python"><span>10</span></span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>p</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span>Process</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span class="variable parameter function python"><span>target</span></span><span class="keyword operator assignment python"><span>=</span></span><span>f</span><span class="punctuation separator parameters python"><span>,</span></span><span>&nbsp;</span><span class="variable parameter function python"><span>args</span></span><span class="keyword operator assignment python"><span>=</span></span><span>(</span><span>number</span><span>,&nbsp;</span><span>vector</span><span>)</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta function-call python"><span>p</span><span>.</span><span>start</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta function-call python"><span>p</span><span>.</span><span>join</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword other python"><span>print</span></span><span>(</span><span>number</span><span>.</span><span>value</span><span>)</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword other python"><span>print</span></span><span>(</span><span class="meta item-access python"><span>vector</span><span class="punctuation definition arguments begin python"><span>[</span></span><span class="meta item-access arguments python"><span>:</span></span><span class="punctuation definition arguments end python"><span>]</span></span></span><span>)</span></span></div></pre>
+<p>Take note of the following points:</p>
+<ul>
+<li>Objects returned by <code>Value()</code> and <code>Array()</code> are merely wrappers for the underlying data objects which have to be retrieved via the <code>value</code> attribute for the former and by an indexing or slicing operator for the latter.</li>
+<li>The <code>'d'</code> and <code>'i'</code> arguments to <code>Value()</code> and <code>Array()</code> are typecodes of the kind used by the <code>array</code> module: <code>'d'</code> indicates a double precision float and <code>'i'</code> indicates a signed integer. The <code>array</code> module documentation gives the <a href="https://docs.python.org/3/library/array.html#module-array">full list</a> of typecodes.</li>
+<li>Shared objects created by <code>Value()</code> and <code>Array()</code> are process and thread-safe by default, meaning that Python automatically synchronizes concurrent access by multiple processes or threads so that race conditions do not occur. Take a moment to look at the documentation of <a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Value"><code>Value</code></a> and <a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Array"><code>Array</code></a> to understand how this process and thread-safety is achieved.</li>
+</ul>
+<p>A second, more advanced way to create shared data is via Python <em>managers</em>, defined in the standard module <code>multiprocessing</code>. Managers allow creating data which can be shared between different processes, including sharing over a network between processes running on different machines. A manager actually runs a background process which manages shared objects. Other processes can access the shared objects by using proxies. Managers support a host of process and thread-safe types such as <code>list</code>, <code>dict</code> and <a href="https://docs.python.org/3/library/multiprocessing.html#managers">many others</a>.  They can also be <a href="https://docs.python.org/3/library/multiprocessing.html#customized-managers">extended to support arbitrary object types</a>. However, this mechanism is slower than <code>Value</code> and <code>Array</code> direct shared memory approach discussed above. The following program illustrates the use of a manager.</p>
+<pre class="editor-colors lang-python"><div class="line"><span class="source python"><span class="keyword control import from python"><span>from</span></span><span>&nbsp;</span><span>multiprocessing</span><span>&nbsp;</span><span class="keyword control import python"><span>import</span></span><span>&nbsp;</span><span>Process</span><span>,&nbsp;</span><span>Manager</span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span class="meta function python"><span class="storage type function python"><span>def</span></span><span>&nbsp;</span><span class="entity name function python"><span>f</span></span><span class="punctuation definition parameters begin python"><span>(</span></span><span class="meta function parameters python"><span class="variable parameter function python"><span>d</span></span><span class="punctuation separator parameters python"><span>,</span></span><span>&nbsp;</span><span class="variable parameter function python"><span>l</span></span></span><span class="punctuation definition parameters end python"><span>)</span></span><span class="punctuation section function begin python"><span>:</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta item-access python"><span>d</span><span class="punctuation definition arguments begin python"><span>[</span></span><span class="meta item-access arguments python"><span class="constant numeric integer decimal python"><span>1</span></span></span><span class="punctuation definition arguments end python"><span>]</span></span></span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="string quoted single single-line python"><span class="punctuation definition string begin python"><span>&#39;</span></span><span>one</span><span class="punctuation definition string end python"><span>&#39;</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta item-access python"><span>d</span><span class="punctuation definition arguments begin python"><span>[</span></span><span class="meta item-access arguments python"><span class="string quoted single single-line python"><span class="punctuation definition string begin python"><span>&#39;</span></span><span>two</span><span class="punctuation definition string end python"><span>&#39;</span></span></span></span><span class="punctuation definition arguments end python"><span>]</span></span></span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="constant numeric integer decimal python"><span>2</span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta function-call python"><span>l</span><span>.</span><span>reverse</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span class="keyword control conditional python"><span>if</span></span><span>&nbsp;</span><span class="support variable magic python"><span>__name__</span></span><span>&nbsp;</span><span class="keyword operator comparison python"><span>==</span></span><span>&nbsp;</span><span class="string quoted single single-line python"><span class="punctuation definition string begin python"><span>&#39;</span></span><span>__main__</span><span class="punctuation definition string end python"><span>&#39;</span></span></span><span>:</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword control statement python"><span>with</span></span><span>&nbsp;</span><span class="meta function-call python"><span>Manager</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span><span>&nbsp;</span><span class="keyword other python"><span>as</span></span><span>&nbsp;</span><span>manager</span><span>:</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>dct</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span>manager</span><span>.</span><span>dict</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>lst</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span>manager</span><span>.</span><span>list</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span class="meta function-call python"><span class="support function builtin python"><span>range</span></span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span class="constant numeric integer decimal python"><span>10</span></span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>p</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span>Process</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span class="variable parameter function python"><span>target</span></span><span class="keyword operator assignment python"><span>=</span></span><span>f</span><span class="punctuation separator parameters python"><span>,</span></span><span>&nbsp;</span><span class="variable parameter function python"><span>args</span></span><span class="keyword operator assignment python"><span>=</span></span><span>(</span><span>dct</span><span>,&nbsp;</span><span>lst</span><span>)</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta function-call python"><span>p</span><span>.</span><span>start</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta function-call python"><span>p</span><span>.</span><span>join</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword other python"><span>print</span></span><span>(</span><span>dct</span><span>)</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword other python"><span>print</span></span><span>(</span><span>lst</span><span>)</span></span></div></pre>
+<p>Notice how the shared dictionary and list (<code>dct</code> and <code>lst</code>) objects are accessed in both parent and child processes. If you are unfamiliar with the <code>with ... as ...</code> statement, then you might want to have a look on <a href="https://docs.python.org/3/library/stdtypes.html#typecontextmanager">this description</a> of Python <em>context management</em>. In the case of <code>multiprocessing.Manager</code>, the context manager ensures the proper termination of the process managing the shared objects, even if an exception occurs in the <code>with</code> block. Otherwise, <code>manager.shutdown()</code> must be explicitly called after finishing work with the manager. A <a href="https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files">more common example</a> of Python context management is with file objects created via the built-in call <code>open()</code>.</p>
+<p>Because shared memory segments created in a process are “inherited” by its children, it is most natural to use shared state for interprocess communication between processes in parent-child configuration. This is the paradigm supported by <code>Value</code> and <code>Array</code> direct shared memory objects and those created and managed by <code>Manager</code>. As mentioned in the above, it is still possible to <a href="https://docs.python.org/3/library/multiprocessing.html#using-a-remote-manager">define managers sharing objects between unrelated processes</a>. We won’t be addressing this mechanism in this session.</p>
+<h3><em>Exercise 1 : The Fibonaccis return</em></h3>
+<p>In Exercise 1 from Session 1, the child process had to output the Fibonacci sequence it generated because the parent and child have their own copies of data. Another approach to designing this program is to establish a shared-memory object between the parent and child processes. This technique allows the child to write the contents of the sequence to the shared-memory object. The parent can then output the sequence when the child completes. Write a Python program to implement this scenario using either the direct shared memory approach or the manager approach. You can reuse parts of your solution for the previous exercise.</p>
+<h2>II. Message passing</h2>
+<p>The Python standard library doesn’t provide process-independent many-to-many message passing facilities. Recall that pipes involve only a pair of processes. The <code>multiprocessing.Queue</code> class implements a First-In-First-Out process-safe queue intended for <a href="https://docs.python.org/3/library/multiprocessing.html#exchanging-objects-between-processes">exchanging objects between multiple processes</a>. <code>multiprocessing.Queue</code> objects are typically used to feed data and tasks (often represented as callables) to a collection of worker processes and to collect results, such as in the  last example on <a href="https://docs.python.org/3/library/multiprocessing.html#examples">this page</a> of the Python library reference. We shall make use of queues when we address process and thread pools.</p>
+<p>Powerful third-party Python messaging libraries do exist nevertheless, such as <a href="https://en.wikipedia.org/wiki/ZeroMQ">ZeroMQ</a>. However, their use is out of the scope of this course. We shall study message passing mechanisms through <code>sysv_ipc</code>, a third-party Python interface of System V interprocess communication facilities which are available on all Unix-like operating systems, including Mac OS X.</p>
+<p>Let’s first proceed to install the <code>sysv_ipc</code> module. A local installation is preferable, and is the only choice if you don’t have root access to your machine. Visit the <a href="http://semanchuk.com/philip/sysv_ipc/">homepage of <code>sysv_ipc</code></a>, retrieve the compressed tar file of the latest release, uncompress it and issue the following command in the root directory of the release:</p>
+<pre class="editor-colors lang-bash"><div class="line"><span class="source shell"><span>login@hostame:</span><span class="keyword operator tilde shell"><span>~</span></span><span>$&nbsp;python3&nbsp;setup.py&nbsp;install&nbsp;--user</span></span></div></pre>
+<p>To make sure the installation is successful, import <code>sysv_ipc</code> in an interactive Python session, and examine the attribute <code>sysv_ipc.__version__</code>.</p>
+<p>Let us turn our attention now to message queues. To illustrate their use, we shall use the following minimal example. An independent process, called the server, creates a message queue then reads integers from the terminal sending them into the message queue until zero (0) is read, at which point the server stops input, removes the message queue, and terminates. A second independent process, called the client, connects to the message queue created by the server, receives integers sent by the latter displaying them on the terminal until it encounters zero (0), at which point it terminates.</p>
+<p>The source code of the server program follows.</p>
+<pre class="editor-colors lang-python"><div class="line"><span class="source python"><span class="keyword control import python"><span>import</span></span><span>&nbsp;</span><span>sysv_ipc</span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span>key</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="constant numeric integer decimal python"><span>128</span></span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span>mq</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span>sysv_ipc</span><span>.</span><span>MessageQueue</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span>key</span><span>,&nbsp;</span><span>sysv_ipc</span><span>.</span><span>IPC_CREAT</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span>value</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="constant numeric integer decimal python"><span>1</span></span></span></div><div class="line"><span class="source python"><span class="keyword control repeat python"><span>while</span></span><span>&nbsp;</span><span>value</span><span>:</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword control exception python"><span>try</span></span><span>:</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>value</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span class="support function builtin python"><span>int</span></span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span class="meta function-call python"><span class="support function builtin python"><span>input</span></span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword control exception python"><span>except</span></span><span>:</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword other python"><span>print</span></span><span>(</span><span class="string quoted double single-line python"><span class="punctuation definition string begin python"><span>&quot;</span></span><span>Input&nbsp;error,&nbsp;try&nbsp;again!</span><span class="punctuation definition string end python"><span>&quot;</span></span></span><span>)</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>message</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span class="support function builtin python"><span>str</span></span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span>value</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span><span>.</span><span class="meta function-call python"><span>e</span><span>ncode</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="meta function-call python"><span>mq</span><span>.</span><span>send</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span>message</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span class="meta function-call python"><span>mq</span><span>.</span><span>remove</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div></pre>
+<p>And that of the client program.</p>
+<pre class="editor-colors lang-python"><div class="line"><span class="source python"><span class="keyword control import python"><span>import</span></span><span>&nbsp;</span><span>sysv_ipc</span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span>key</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="constant numeric integer decimal python"><span>128</span></span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span>mq</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span>sysv_ipc</span><span>.</span><span>MessageQueue</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span>key</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;</span></span></div><div class="line"><span class="source python"><span class="keyword control repeat python"><span>while</span></span><span>&nbsp;</span><span class="constant language python"><span>True</span></span><span>:</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>message</span><span>,&nbsp;</span><span>t</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span>mq</span><span>.</span><span>receive</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>value</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span>message</span><span>.</span><span>decode</span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>value</span><span>&nbsp;</span><span class="keyword operator assignment python"><span>=</span></span><span>&nbsp;</span><span class="meta function-call python"><span class="support function builtin python"><span>int</span></span><span class="punctuation definition arguments begin python"><span>(</span></span><span class="meta function-call arguments python"><span>value</span></span><span class="punctuation definition arguments end python"><span>)</span></span></span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword control conditional python"><span>if</span></span><span>&nbsp;</span><span>value</span><span>:</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword other python"><span>print</span></span><span>(</span><span class="string quoted double single-line python"><span class="punctuation definition string begin python"><span>&quot;</span></span><span>received:</span><span class="punctuation definition string end python"><span>&quot;</span></span></span><span>,&nbsp;</span><span>value</span><span>)</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword control conditional python"><span>else</span></span><span>:</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword other python"><span>print</span></span><span>(</span><span class="string quoted double single-line python"><span class="punctuation definition string begin python"><span>&quot;</span></span><span>exiting.</span><span class="punctuation definition string end python"><span>&quot;</span></span></span><span>)</span></span></div><div class="line"><span class="source python"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword control statement python"><span>break</span></span></span></div></pre>
+<p>Before running these programs, examine them carefully and make sure you understand how they work by referring to the <a href="http://semanchuk.com/philip/sysv_ipc/#message_queue">documentation of the <code>sysv_ipc.MessageQueue</code> class</a> and taking the following remarks into account.</p>
+<ul>
+<li>Messages passed to <code>MessageQueue.send()</code> and retrieved by <code>MessageQueue.receive()</code> are objects of type <code>bytes</code>. Objects of this type can be created literally, e.g. <code>b&quot;Razmig&quot;</code>, or by calling the <code>encode()</code> method on <code>str</code> objects to convert from <code>str</code> to <code>bytes</code>. A <code>bytes</code> object can be converted to <code>str</code> by calling its <code>decode()</code> method.</li>
+<li>We can associate integer identifiers with messages, referred to as message types. This allows us to retrieve specific messages from the queue. If unspecified upon sending, the message type defaults to 1. If unspecified upon receiving, the message type defaults to 0, which translates to retrieving the first message on the queue. This is the exact behavior of our programs.</li>
+<li>In order for queue operations send and receive to succeed, the queue must be alive. Algorithms must be designed so that these operations aren’t attempted after the removal of the queue, which should be systematically carried out at the end of the communication.</li>
+</ul>
+<p>Go ahead and run the two programs in 2 separate terminals. Launch a third terminal and issue the command <code>ipcs</code>. Examine its output and find the section that lists message queues. You should be able to locate the active message queue by its key. If something goes wrong and the server program crashes before it had the opportunity to remove the queue, you can do that manually by issuing the command <code>ipcrm -Q key</code>, where <code>key</code> is the key that was used to create the message queue in question.</p>
+<h3><em>Exercise 2 : Is it time yet?</em></h3>
+<p>We’d like to implement a time server that creates a message queue and listens on it. It understands 2 types of messages, 1 and 2. Messages of type 1 are time requests. Upon receiving a time request, the server reads the system clock (see <code>time.asctime()</code>), and sends it into the queue as message type 3. A message of type 2 is a termination request. Upon receiving it, the server removes the message queue and terminates. The client program connects to the message queue, prompts the user for the message type to send to the server and communicates with the latter accordingly. Upon receiving a message from the server in response to a time request, it displays the message on the terminal. Implement the server and the client programs using the message passing facilities of the <code>sysv_ipc</code> module. Test with multiple clients.</p></body>
+</html>

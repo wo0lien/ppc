@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>TD5</title><script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["[a11y]/accessibility-menu.js"],
+    'HTML-CSS': {
+      availableFonts: [],
+      webFont: 'TeX',
+      undefinedFamily: "serif",
+      mtextFontInherit: true,
+    },
+    TeX: {
+  "Macros": {},
+  "equationNumbers": {},
+  "extensions": [
+    "AMSmath.js",
+    "AMSsymbols.js",
+    "noErrors.js",
+    "noUndefined.js"
+  ]
+},
+    showMathMenu: true
+  });
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js"></script>
+    <style>.emoji {
+  max-width: 1em !important;
+}
+del {
+  text-decoration: none;
+  position: relative;
+}
+del::after {
+  border-bottom: 1px solid black;
+  content: '';
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+ul.contains-task-list li.task-list-item {
+  position: relative;
+  list-style-type: none;
+}
+ul.contains-task-list li.task-list-item input.task-list-item-checkbox {
+  position: absolute;
+  transform: translateX(-100%);
+  width: 30px;
+}
+span.critic.comment {
+  position: relative;
+}
+span.critic.comment::before {
+  content: '\1f4ac';
+  position: initial;
+}
+span.critic.comment > span {
+  display: none;
+}
+span.critic.comment:hover > span {
+  display: initial;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border: 1px solid;
+  border-radius: 5px;
+  max-height: 4em;
+  overflow: auto;
+}
+span.critic.comment:focus > span {
+  display: initial;
+  text-decoration: underline;
+  position: initial;
+  top: auto;
+  left: auto;
+  border: initial;
+  border-radius: initial;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: transparent;
+}
+
+body {
+  padding: 2em;
+  font-size: 1.2em;
+  color: #1d1f21;
+  background-color: #ffffff;
+  overflow: auto;
+}
+body > :first-child,
+body > div.update-preview > :first-child {
+  margin-top: 0;
+}
+body > p,
+body > div.update-preview > p {
+  margin-top: 0;
+  margin-bottom: 1.5em;
+}
+body > ul,
+body > div.update-preview > ul,
+body > ol,
+body > div.update-preview > ol {
+  margin-bottom: 1.5em;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.2;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: #000000;
+}
+h1 {
+  font-size: 2.4em;
+  font-weight: 300;
+}
+h2 {
+  font-size: 1.8em;
+  font-weight: 400;
+}
+h3 {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+h4 {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+h5 {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+h6 {
+  font-size: 1em;
+  font-weight: 600;
+}
+strong {
+  color: #000000;
+}
+del {
+  color: #43484c;
+}
+a,
+a code {
+  color: #1d1f21;
+}
+img {
+  max-width: 100%;
+}
+blockquote {
+  margin: 1.5em 0;
+  font-size: inherit;
+  color: #43484c;
+  border-color: #d6d6d6;
+  border-width: 4px;
+}
+hr {
+  margin: 3em 0;
+  border-top: 2px dashed #d6d6d6;
+  background: none;
+}
+table {
+  margin: 1.5em 0;
+}
+th {
+  color: #000000;
+}
+th,
+td {
+  padding: 0.66em 1em;
+  border: 1px solid #d6d6d6;
+}
+code {
+  color: #000000;
+  background-color: #f0f0f0;
+}
+pre.editor-colors {
+  margin: 1.5em 0;
+  padding: 1em;
+  font-size: 0.92em;
+  border-radius: 3px;
+  background-color: #f5f5f5;
+}
+kbd {
+  color: #000000;
+  border: 1px solid #d6d6d6;
+  border-bottom: 2px solid #c7c7c7;
+  background-color: #f0f0f0;
+}
+
+.bracket-matcher .region {
+  border-bottom: 1px dotted lime;
+  position: absolute;
+}
+.line-number.bracket-matcher.bracket-matcher {
+  color: #373b41;
+  background-color: #e0e0e0;
+}
+
+.spell-check-misspelling .region {
+  border-bottom: 2px dotted rgba(255, 51, 51, 0.75);
+}
+.spell-check-corrections {
+  width: 25em !important;
+}
+
+pre.editor-colors {
+  background-color: #ffffff;
+  color: #1d1f21;
+}
+pre.editor-colors .wrap-guide {
+  background-color: #c5c8c6;
+}
+pre.editor-colors .indent-guide {
+  color: #c5c8c6;
+}
+pre.editor-colors .invisible-character {
+  color: #c5c8c6;
+}
+pre.editor-colors .gutter {
+  background-color: #ffffff;
+  color: #b4b7b4;
+}
+pre.editor-colors .gutter .line-number {
+  padding: 0 0.25em 0 0.5em;
+  -webkit-font-smoothing: antialiased;
+}
+pre.editor-colors .gutter .line-number.cursor-line {
+  background-color: #e0e0e0;
+  color: #373b41;
+}
+pre.editor-colors .gutter .line-number.cursor-line-no-selection {
+  color: #373b41;
+}
+pre.editor-colors .gutter .line-number.folded,
+pre.editor-colors .gutter .line-number:after,
+pre.editor-colors .fold-marker:after {
+  color: #b4b7b4;
+}
+pre.editor-colors .invisible {
+  color: #1d1f21;
+}
+pre.editor-colors .cursor {
+  color: #1d1f21;
+}
+pre.editor-colors .selection .region {
+  background-color: #e0e0e0;
+}
+pre.editor-colors .bracket-matcher .region {
+  border-color: #b4b7b4;
+}
+.syntax--comment {
+  color: #969896;
+}
+.syntax--comment .syntax--markup.syntax--link {
+  color: #969896;
+}
+.syntax--entity.syntax--name.syntax--type {
+  color: #f0c674;
+}
+.syntax--entity.syntax--other.syntax--inherited-class {
+  color: #b5bd68;
+}
+.syntax--keyword {
+  color: #b294bb;
+}
+.syntax--keyword.syntax--control {
+  color: #b294bb;
+}
+.syntax--keyword.syntax--operator {
+  color: #1d1f21;
+}
+.syntax--keyword.syntax--other.syntax--special-method {
+  color: #81a2be;
+}
+.syntax--keyword.syntax--other.syntax--unit {
+  color: #de935f;
+}
+.syntax--storage {
+  color: #b294bb;
+}
+.syntax--constant {
+  color: #de935f;
+}
+.syntax--constant.syntax--character.syntax--escape {
+  color: #8abeb7;
+}
+.syntax--constant.syntax--numeric {
+  color: #de935f;
+}
+.syntax--constant.syntax--other.syntax--color {
+  color: #8abeb7;
+}
+.syntax--constant.syntax--other.syntax--symbol {
+  color: #8abeb7;
+}
+.syntax--variable {
+  color: #cc6666;
+}
+.syntax--variable.syntax--interpolation {
+  color: #a3685a;
+}
+.syntax--variable.syntax--parameter.syntax--function {
+  color: #1d1f21;
+}
+.syntax--invalid.syntax--illegal {
+  background-color: #cc6666;
+  color: #ffffff;
+}
+.syntax--string {
+  color: #b5bd68;
+}
+.syntax--string.syntax--regexp {
+  color: #8abeb7;
+}
+.syntax--string.syntax--regexp .syntax--source.syntax--ruby.syntax--embedded {
+  color: #f0c674;
+}
+.syntax--string.syntax--other.syntax--link {
+  color: #cc6666;
+}
+.syntax--punctuation.syntax--definition.syntax--parameters,
+.syntax--punctuation.syntax--definition.syntax--array {
+  color: #1d1f21;
+}
+.syntax--punctuation.syntax--definition.syntax--heading,
+.syntax--punctuation.syntax--definition.syntax--identity {
+  color: #81a2be;
+}
+.syntax--punctuation.syntax--definition.syntax--bold {
+  color: #f0c674;
+  font-weight: bold;
+}
+.syntax--punctuation.syntax--definition.syntax--italic {
+  color: #b294bb;
+  font-style: italic;
+}
+.syntax--punctuation.syntax--section.syntax--embedded {
+  color: #a3685a;
+}
+.syntax--punctuation.syntax--section.syntax--method,
+.syntax--punctuation.syntax--section.syntax--class,
+.syntax--punctuation.syntax--section.syntax--inner-class {
+  color: #1d1f21;
+}
+.syntax--support.syntax--class {
+  color: #f0c674;
+}
+.syntax--support.syntax--function {
+  color: #8abeb7;
+}
+.syntax--support.syntax--function.syntax--any-method {
+  color: #81a2be;
+}
+.syntax--entity.syntax--name.syntax--function {
+  color: #81a2be;
+}
+.syntax--entity.syntax--name.syntax--class,
+.syntax--entity.syntax--name.syntax--type.syntax--class {
+  color: #f0c674;
+}
+.syntax--entity.syntax--name.syntax--section {
+  color: #81a2be;
+}
+.syntax--entity.syntax--name.syntax--tag {
+  color: #cc6666;
+}
+.syntax--entity.syntax--other.syntax--attribute-name {
+  color: #de935f;
+}
+.syntax--entity.syntax--other.syntax--attribute-name.syntax--id {
+  color: #81a2be;
+}
+.syntax--meta.syntax--class {
+  color: #f0c674;
+}
+.syntax--meta.syntax--class.syntax--body {
+  color: #1d1f21;
+}
+.syntax--meta.syntax--link {
+  color: #de935f;
+}
+.syntax--meta.syntax--method-call,
+.syntax--meta.syntax--method {
+  color: #1d1f21;
+}
+.syntax--meta.syntax--require {
+  color: #81a2be;
+}
+.syntax--meta.syntax--selector {
+  color: #b294bb;
+}
+.syntax--meta.syntax--separator {
+  background-color: #373b41;
+  color: #1d1f21;
+}
+.syntax--meta.syntax--tag {
+  color: #1d1f21;
+}
+.syntax--none {
+  color: #1d1f21;
+}
+.syntax--markup.syntax--bold {
+  color: #de935f;
+  font-weight: bold;
+}
+.syntax--markup.syntax--changed {
+  color: #b294bb;
+}
+.syntax--markup.syntax--deleted {
+  color: #cc6666;
+}
+.syntax--markup.syntax--italic {
+  color: #b294bb;
+  font-style: italic;
+}
+.syntax--markup.syntax--heading {
+  color: #cc6666;
+}
+.syntax--markup.syntax--heading .syntax--punctuation.syntax--definition.syntax--heading {
+  color: #81a2be;
+}
+.syntax--markup.syntax--link {
+  color: #81a2be;
+}
+.syntax--markup.syntax--inserted {
+  color: #b5bd68;
+}
+.syntax--markup.syntax--quote {
+  color: #de935f;
+}
+.syntax--markup.syntax--raw {
+  color: #b5bd68;
+}
+.syntax--source.syntax--gfm .syntax--markup {
+  -webkit-font-smoothing: auto;
+}
+.syntax--source.syntax--gfm .syntax--link .syntax--entity {
+  color: #8abeb7;
+}
+.syntax--source.syntax--cs .syntax--keyword.syntax--operator {
+  color: #b294bb;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--string.syntax--quoted.syntax--json {
+  color: #cc6666;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--string.syntax--quoted.syntax--json > .syntax--punctuation.syntax--string {
+  color: #cc6666;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--json,
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--array.syntax--json > .syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--json,
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--json > .syntax--punctuation,
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--array.syntax--json > .syntax--value.syntax--json > .syntax--string.syntax--quoted.syntax--json > .syntax--punctuation {
+  color: #b5bd68;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json > .syntax--constant.syntax--language.syntax--json,
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--array.syntax--json > .syntax--constant.syntax--language.syntax--json {
+  color: #8abeb7;
+}
+</style>
+
+  </head>
+  <body>
+    <h1>Session 5 : Synchronization primitives</h1>
+<p>Razmig Kéchichian</p>
+<h3><em>Learning outcomes</em></h3>
+<p>The aim of this session is to familiarize you with tools that allow synchronized access and protection for shared resources in multi-process and -threaded Python programs.</p>
+<h2>I. Introduction</h2>
+<p>Python provides synchronization primitives for processes and threads in respective modules <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">threading</code>. Recall that many Python inter-process and -thread communication primitives are already synchronized, such as shared objects created by <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing.Value()</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing.Array()</code>, and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Queue</code> objects provided in both modules. In this session, we turn our attention to situations where explicit synchronization is required, namely in the <em>critical code section</em> problem which can by solved via mutex locks, and the simultaneous access to a limited number of resources which can be synchronized via semaphores.</p>
+<p>Synchronization primitives defined in modules <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">threading</code> have the same API and semantics. We shall study two of these, namely mutex locks defined by <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Lock</code> and semaphores defined by <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Semaphore</code>. Instances of these classes behave the way you expect them to (if in doubt, review your lecture handout). Acquisition and release of objects of both types is done via methods <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">acquire()</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">release()</code> respectively. Furthermore, both classes support the context management protocol allowing the automation of the pair of calls <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">acquire()</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">release()</code> in the beginning and at the end of a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">with</code> block, if necessary. An example of mutual exclusion via <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">threading.Lock</code> looks like the following.</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python"><span class="syntax--comment syntax--line"># shared definitions</span></span></span>
+<span class=""><span class="syntax--source syntax--python">counter <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--constant syntax--language">0</span></span></span>
+<span class=""><span class="syntax--source syntax--python">lock <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--entity syntax--name syntax--function">Lock</span>()</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--comment syntax--line"># in threaded code</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">with</span> lock:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">  </span>counter <span class="syntax--keyword syntax--operator">+=</span> <span class="syntax--constant syntax--language">1</span></span></span></pre>
+<p>The use of the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">with</code> statement is equivalent to calling <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">lock.acquire()</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">lock.release()</code> prior to and after updating the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">counter</code> variable.</p>
+<p>Here’s a typical use of semaphores. Imagine a client-server system. The client is multi-threaded and connects to the server in separate threads. The server accepts a limited number of client connections, beyond which new connections will have to wait. A typical solution for the client looks like this.</p>
+<pre class="editor-colors lang-python"><span><span class="syntax--source syntax--python"><span class="syntax--comment syntax--line"># shared definitions</span></span></span>
+<span class=""><span class="syntax--source syntax--python">MAX_CONNECTIONS <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--constant syntax--language">10</span></span></span>
+<span class=""><span class="syntax--source syntax--python">semaphore <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--entity syntax--name syntax--function">Semaphore</span>(MAX_CONNECTIONS)</span></span>
+<span class=""></span> 
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--comment syntax--line"># in threaded code</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="syntax--keyword syntax--control">with</span> semaphore:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">  </span>connection <span class="syntax--keyword syntax--operator">=</span> <span class="syntax--entity syntax--name syntax--function">connect_to_server</span>()</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">  </span><span class="syntax--keyword syntax--control">try</span>:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span><span class="syntax--comment syntax--line"># use connection</span></span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">  </span>finally:</span></span>
+<span class=""><span class="syntax--source syntax--python"><span class="leading-whitespace">    </span>connection.<span class="syntax--entity syntax--name syntax--function">close</span>()</span></span></pre>
+<p>Once again, the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">with</code> statement can be replaced by <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">semaphore.acquire()</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">semaphore.release()</code> calls surrounding the enclosed code block if necessary.</p>
+<p>Needless to say, the Python implementation makes sure that locks and semaphores are thread and process safe, i.e. that their methods are atomic. Have a look on the documentation of classes <a href="https://docs.python.org/3/library/threading.html#lock-objects"><code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Lock</code></a> and <a href="https://docs.python.org/3/library/threading.html#semaphore-objects"><code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">Semaphore</code></a> before moving on to exercises.</p>
+<h3><em>Exercise 1: Critical <span class="math"><script type="math/tex">\pi</script></span></em></h3>
+<p>In Exercise 1 of Session 3, you were asked to implement a randomization method to estimate the value of <span class="math"><script type="math/tex">\pi</script></span>. The implementation was based on a pair of threads, a worker thread that generated random points and counted in-circle occurrences, and a main thread that calculated the value of <span class="math"><script type="math/tex">\pi</script></span>.</p>
+<p>We’d like to develop this solution to allow several worker threads, allowing the generation of a greater number of points in parallel hence improving the precision of the <span class="math"><script type="math/tex">\pi</script></span> estimate.</p>
+<ul>
+<li>Make sure to identify the critical section first and choose the appropriate synchronization primitive to protect against race conditions.</li>
+<li>Provide the number of threads and the number of points to generate per thread as arguments to your program (hint: <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">sys.argv[]</code>)</li>
+<li><strong>Optional</strong>: Since the APIs of <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">threading</code> and <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">multiprocessing</code> are largely similar, you can opt for a multiprocessing solution for this problem. Pay attention however to the kind of shared variables to use in each case.</li>
+</ul>
+<h3><em>Exercise 2: Fibonacci producers and consumers</em></h3>
+<p>In this exercise, we tackle an instance of the Producers and Consumers problem with a bounded buffer (if necessary, review your lecture handouts to refresh your memory).</p>
+<p>In Exercise 1 from Session 2, you were asked to implement a parent-child process communication via shared memory, whereby the child process generates and writes Fibonacci series to the shared buffer up to the <span class="math"><script type="math/tex">n^{th}</script></span> element while the parent waits for it to terminate before displaying results.</p>
+<p>In this exercise, you are asked to implement a Producer-Consumer solution to this problem to allow the consumer process to read Fibonacci numbers as soon as they are generated. Reading and writing takes place from and to a shared buffer of a predefined size.</p>
+<p>Here’s few hints to assit you.</p>
+<ul>
+<li>Organize your program around 3 processes, a producer generating Fibonacci series, a consumer reading the series and displaying them, and the main process launching the previous two.</li>
+<li>You can opt for a multi-threaded or a multi-processing solution. Pay attention however to the kind of shared buffer to use in each case. For a multi-threaded solution, you need to share an array-type structure between your producer and consumer threads. The standard module <a href="https://docs.python.org/3/library/array.html#module-array"><code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">array</code></a> provides a data structure called <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">array</code> intended for the efficient storage of elements of identical type (as opposed to <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">list</code>). For example, you can create an <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">array</code> of 5 integers in the following manner.<pre class="editor-colors lang-python"><span class=""><span class="syntax--source syntax--python">a <span class="syntax--keyword syntax--operator">=</span> array.<span class="syntax--entity syntax--name syntax--function">array</span>(<span class="syntax--string syntax--quoted">'i'</span>, <span class="syntax--entity syntax--name syntax--function">range</span>(<span class="syntax--constant syntax--language">5</span>))</span></span></pre>
+</li>
+<li>Since the buffer is limited, you have to use modulo arithmetic to index it when writing to or reading from it (cf. lecture notes).</li>
+<li>Neither the producer nor the consumer processes loop indefinitely in a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">while True:</code> loop; the producer terminates when it reaches <span class="math"><script type="math/tex">n</script></span>. To terminate the consumer, you can maintain a flag, initially set to <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">True</code>, on which the consumer iterates. The producer sets it to <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">False</code> upon terminating, allowing the termination of the consumer as well. There’s a problem with this termination mechanism however. Can you identify it ? Pay attention to the type of the structure to use to store this flag for a multi-threaded or a multi-processing solution.</li>
+<li><strong>Optional</strong>: generalize your solution to accept multiple producers and consumers.</li>
+</ul>
+
+  </body>
+</html>
