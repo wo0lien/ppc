@@ -8,16 +8,17 @@ import termios
 # on génère la pile de cartes LIFO
 pioche = list()
 defausse = list()
-# mutex pour les 2 piles de cartes
 
+# mutex pour les 2 piles de cartes
 playLock = Lock()
 defausseLock = Lock()
 
 
 def player(key, deck, event):
 
-    global playLock
+    global playLock, defausseLock
     global pioche, defausse
+    ldefausse = carte() #copie locale de la defausse 
 
     # on recupere la defausse
 
