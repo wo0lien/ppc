@@ -5,9 +5,25 @@ import sysv_ipc
 import sys
 import select
 import tty
-import termios
 import random
 from card import GameCard
+
+# KBHit
+
+import os
+
+# Windows
+if os.name == 'nt':
+    import msvcrt
+
+# Posix (Linux, OS X)
+else:
+    import sys
+    import termios
+    import atexit
+    from select import select
+
+from kbhitmod import KBHit
 
 # on génère la pile de cartes LIFO
 pioche = list()
@@ -75,9 +91,18 @@ def player(key, deck, event):
 
     mq = sysv_ipc.MessageQueue(key)
 
+    kb = KBHit()
+
     while True:
+        
         while True:
             # wait une action du joueur OU une action sur le board avec les event
+
+            if kb.kbhit():
+                c = kb.getch()
+                if ord(c) == 27: # ESC
+                    break
+                print(c)
 
             # handle une modification de la liste
             if event.is_set():
@@ -85,10 +110,9 @@ def player(key, deck, event):
                     ldefausse = defausse
                 event.clear()
 
-            # if ordre de jouer une carte:
-            #   cardindex = cardsaisie
-            #   break
-        print("Defausse :"+ldefausse)
+        kb.set_normal_term()
+
+        print("Defausse :" + ldefausse)
         for i in range(len(deck)):
             print(deck[i])
             
