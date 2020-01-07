@@ -1,4 +1,6 @@
 from multiprocessing import Lock, Process, Event
+import threading
+import queue
 import sysv_ipc
 import sys
 import select
@@ -10,15 +12,37 @@ import random
 pioche = list()
 defausse = list()
 
-# mutex pour les 2 piles de cartes
+# mutex
 playLock = Lock()
 defausseLock = Lock()
 
+def displayer(display_queue, display_event, response_event):
+    """
+    Thread qui sera appelé par le process joueur pour gérer les affichages.
+    """
+    while True:
+        display_event.wait()
+        value = display_queue.get()
+
+        print(value) # ensuite on rajoutera le traitement et le socket la dessus
+
+        display_event.clear()
+        response_event.set()
 
 def player(key, deck, event):
+
+    # lien avec le thread displayer
+
+    display_queue = queue.Queue()
+    display_event = threading.Event()
+    response_event = threading.Event()
+
+    displayer = threading.Thread(target="displayer", args=(display_queue, display_event, response_event))
+    
+    # creation d'une variable globale
+
     global playLock, defausseLock
-    global pioche, defausse
-    ldefausse = carte()  # copie locale de la defausse
+    global pioche, defausse 
 
     # on recupere la defausse
 
@@ -28,7 +52,6 @@ def player(key, deck, event):
     mq = sysv_ipc.MessageQueue(key)
 
     while True:
-
         while True:
             # wait une action du joueur OU une action sur le board avec les event
 
