@@ -95,25 +95,17 @@ def player(key, deck, event):
     kb = KBHit()
 
     while True:
-        
-        while True:
-            # wait une action du joueur OU une action sur le board avec les event
+        # wait une action du joueur OU une action sur le board avec les event
 
-            if kb.kbhit():
-                c = kb.getch()
-                print(c)
-                if (int(c) > 0 and int(c) <= len(deck)):
-                    # si l'input fait partie du deck de la personne
-                    pass
-                else:
-                    print("not a valid card")
+        if kb.kbhit():
+            c = kb.getch()
+            print(c)
+            if (int(c) > 0 and int(c) <= len(deck)):
+                # si l'input fait partie du deck de la personne
+                pass
+            else:
+                print("not a valid card")
 
-            # handle une modification de la liste
-            if event.is_set():
-                with defausseLock():
-                    ldefausse = defausse
-                    display_queue.put(ldefausse + deck) # on update l'affichage avec le displayer
-                event.clear()
 
         kb.set_normal_term()
 
@@ -180,7 +172,6 @@ if __name__ == "__main__":
         pioche.append(lcarte.pop(random.randint(0, len(lcarte)-1)))
     
     defausse.append(pioche.pop())
-    print("defausse",defausse)
 
     # rentre dans le jeu
     for ev in levent:
