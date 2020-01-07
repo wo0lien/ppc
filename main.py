@@ -87,22 +87,22 @@ def player(key, deck, event, pioche, defausse):
 
     mq = sysv_ipc.MessageQueue(key)
 
-    kb = KBHit()
+    # kb = KBHit()
 
     while True:
         # wait une action du joueur OU une action sur le board avec les event
 
-        if kb.kbhit():
-            c = kb.getch()
-            print(c)
-            if (int(c) > 0 and int(c) <= len(deck)):
-                # si l'input fait partie du deck de la personne
-                pass
-            else:
-                print("not a valid card")
+        # if kb.kbhit():
+        #     c = kb.getch()
+        #     print(c)
+        #     if (int(c) > 0 and int(c) <= len(deck)):
+        #         # si l'input fait partie du deck de la personne
+        #         pass
+        #     else:
+        #         print("not a valid card")
 
 
-        kb.set_normal_term()
+        # kb.set_normal_term()
 
         print("Defausse :" + ldefausse)
         # wait une action du joueur OU une action sur le board avec les event
