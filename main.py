@@ -100,14 +100,18 @@ def player(key, deck, event):
 
             if kb.kbhit():
                 c = kb.getch()
-                if ord(c) == 27: # ESC
-                    break
                 print(c)
+                if (int(c) > 0 and int(c) <= len(deck)):
+                    # si l'input fait partie du deck de la personne
+                    pass
+                else:
+                    print("not a valid card")
 
             # handle une modification de la liste
             if event.is_set():
                 with defausseLock():
                     ldefausse = defausse
+                    display_queue.put(ldefausse + deck) # on update l'affichage avec le displayer
                 event.clear()
 
         kb.set_normal_term()
