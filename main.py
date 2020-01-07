@@ -80,14 +80,15 @@ def player(key, deck, event):
     displayer.start()
 
     # creation d'une variable globale
-
-    global playLock, defausseLock
     global pioche, defausse 
-
+    global playLock, defausseLock
+    print("Event",event.is_set())
+    #on attend le top
+    event.wait()
     # on recupere la defausse
-
     with defausseLock:
-        ldefausse = defausse
+        print("def",defausse)
+        ldefausse = defausse[0]
 
     mq = sysv_ipc.MessageQueue(key)
 
@@ -117,13 +118,29 @@ def player(key, deck, event):
         kb.set_normal_term()
 
         print("Defausse :" + ldefausse)
+        # wait une action du joueur OU une action sur le board avec les event
+
+        # handle une modification de la liste
+        if event.is_set():
+            with defausseLock():
+                ldefausse = defausse[-1]
+            event.clear()
+
+        # if ordre de jouer une carte:
+        #   cardindex = cardsaisie
+        #   break
+        print("Defausse :"+ldefausse)
         for i in range(len(deck)):
-            print(deck[i])
+            print("index : "+i+" "+deck[i])
             
-        cardIndex = int(input())
+        cardIndex = int(input("Select index ?"))
         # envoie la carte et attend une reponse
 
         playLock.acquire()
+
+        cardenv = mq.encode(deck[cardIndex])
+        mq.send(cardenv)
+
         # wait la reponse
         message, t = mq.receive()
         value = int(message.decode())
@@ -137,9 +154,7 @@ def player(key, deck, event):
 
 
 if __name__ == "__main__":
-
     # queue pour la communication interprocess
-
     key = 128
     mq = sysv_ipc.MessageQueue(key, sysv_ipc.IPC_CREAT)
 
@@ -149,38 +164,42 @@ if __name__ == "__main__":
     for i in range(10):
         lcarte.append(GameCard("r",i+1))
         lcarte.append(GameCard("b",i+1))
-
+    
+    levent=list()
     for i in range(nbJoueurs):
         playerDeck=list()
         for i in range(5):
             playerDeck.append(lcarte.pop(random.randint(0, len(lcarte)-1)))
         ev = Event()
+        ev.clear()
+        levent.append(ev)
+        print("Ev",ev.is_set())
         p = Process(target=player, args=(key, playerDeck, ev,))
         p.start()
     for i in range(len(lcarte)):
         pioche.append(lcarte.pop(random.randint(0, len(lcarte)-1)))
     
     defausse.append(pioche.pop())
+    print("defausse",defausse)
 
     # rentre dans le jeu
+    for ev in levent:
+        ev.set()
 
     while True:
         valid = False
         message, t = mq.receive()
         # on bloque la possibilité de poser des cartes
-        value = message.decode()
+        carteR = message.decode()
+        print("Carte:"+carteR)
         # Si c'est valide ou non on renvoie dans la queue le nombre de cartes a piocher
-        try:
-            carteR = GameCard(value,1)
-        except TypeError:
-            print("NotACard")
+        if (carteR.color!=defausse[-1].color and (carteR.nb==defausse[-1].nb-1 or carteR.nb==defausse[-1].nb+1) ) or (carteR.color==defausse[-1].color and  carteR.nb==defausse[-1].nb):
+            valid = True
+            mq.send("1".encode())
+        if valid:
+            defausse.append(carteR)
+            mq.send("0".encode())
         else:
-            if (carteR.color!=defausse[-1].color and (carteR.nb==defausse[-1].nb-1 or carteR.nb==defausse[-1].nb+1) ) or (carteR.color==defausse[-1].color and  carteR.nb==defausse[-1].nb):
-                valid = True
-            if valid:
-                defausse.append(carteR)
-                mq.send("0".encode())
-            else:
-                mq.send(pioche.pop().encode())
+            mq.send(pioche.pop().encode())
 
     mq.remove()
