@@ -14,13 +14,31 @@ defausseLock = Lock()
 vfin = -1 
 
 
+def displayer(queue, display_event, response):
+    while True:
+        display_event.wait()
+        value = queue.get()
+
+        traite(value) => affiche le bon message
+
+        display_event.clear()
+        response.set()
+
 def player(key, deck, event, idjoueur):
 
     global playLock
     global pioche, defausse
     global vfin
 
-    # on recupere la defausse
+    # preparation du thread displayer
+    queue = Queue()
+    something_to_display = threading.Event()
+    response = threading.Event()
+ 
+    thread = threading.Thread(target=displayer, args=(queue, something_to_display, response))
+    thread.start()
+
+    # on recupere la carte au desus de la defausse
     with defausseLock:
         ldefause = defausse
 
@@ -38,10 +56,17 @@ def player(key, deck, event, idjoueur):
             with defausseLock():
                 ldefause = defausse #on recupere une copie locale de la defausse pour l'affichage du plateau
             event.clear()
-        afficher(ldefause)
-        afficher(deck)
+
+        queue.put("diplay_defausse " + ldefause)
+        display_event.set()
+        response.wait()
+        
+        queue.put("diplay_deck" + deck)
+        display_event.set()
+        response.wait()       
 
         if ordre valide de jouer une carte:
+
             cardindex = cardsaisie.index
             #on essaie de jouer si personne n'est deja en train de jouer
             if playLock.acquire(0)==1:
@@ -61,7 +86,9 @@ def player(key, deck, event, idjoueur):
             
                 playLock.release()
             else:
-                affichage.jeuimpossible()
+                queue.put("diplay_impossible")
+                display_event.set()
+                response.wait()
         
         if deck.length()==0:
             with playLock:
@@ -73,23 +100,28 @@ def player(key, deck, event, idjoueur):
             break
 
     if vfin==0:
-        affichage.finsansvainqueur()
+        queue.put("display_finsansvainqueur")
+        display_event.set()
+        response.wait()
     else:
-        affichage.finvainqueur(vfin)
+        queue.put("diplay_finvainqueur" + vfin)
+        display_event.set()
+        response.wait()
 
 
 if __name__ == "__main__":
 
     # queue pour la communication interprocess
     key = 128
-    mq = sysv_ipc.MessageQueue(key, sysv_ipc.IPC_CREAT)
+    mq = sysv_ipc.MessageQueue(key, sysv_ipc.IPC_CREAT) # cree la message queue
+
     levent=list()
-    lthread=list()
+    lprocess=list()
 
     #initialisation
     global pioche, defausse
     pioche = liste de ("couleur", nombre) entre 1 et 10, rouge et bleu
-    nbJoueurs = 3
+    nbJoueurs = 2
 
     for i in range(nbJoueurs):
         playerDeck = [list de tuples ("couleur", nombre) piochés random dans la pioche]
@@ -97,7 +129,7 @@ if __name__ == "__main__":
         levent.append(ev)
         p = Process(target=player, args=(key, playerDeck, ev, i))
         p.start()
-        lthread.append(p)
+        lprocess.append(p)
     
     # rentre dans le jeu
     while True:
@@ -106,7 +138,7 @@ if __name__ == "__main__":
         messageRecu = message.decode()
         # Si c'est valide ou non on renvoie dans la queue le nombre de cartes a piocher
         if message[0]=="2":
-            valid = carteRecue.isValide() #on regarde si la carte recu peut être jouée 
+            valid = carteRecue.isValide() # on regarde si la carte recu peut être jouée 
             if valid:
                 defausse.append(carteRecue)
                 mq.send("0000".encode())
@@ -133,10 +165,6 @@ if __name__ == "__main__":
                 for elt in levent:
                     elt.set()
                 break
-    for elt in lthread:
+    for elt in lprocess:
         elt.join()
     mq.remove()
-
-        
-
- 
