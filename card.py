@@ -2,6 +2,6 @@
 
 class GameCard:
 
-    def __init___(self, color, nb):
+    def __init__(self, color, nb):
         self.color = color
         self.nb = nb
