@@ -1,4 +1,4 @@
-from multiprocessing import Lock, Process, Event
+from multiprocessing import Lock, Process, Event, Manager
 import threading
 import queue
 import sysv_ipc
@@ -24,10 +24,6 @@ else:
     from select import select
 
 from kbhitmod import KBHit
-
-# on génère la pile de cartes LIFO
-pioche = list()
-defausse = list()
 
 # mutex
 playLock = Lock()
@@ -70,17 +66,16 @@ def displayer(dqueue):
         dqueue.task_done() # annonce qu'il a fini le tracardsent
 
 
-def player(key, deck, event):
+def player(key, deck, event, pioche, defausse):
 
     # liaison avec le displayer
 
     display_queue = queue.Queue()
 
-    displayer = threading.Thread(target=displayer, args=(display_queue,))
-    displayer.start()
+    disp = threading.Thread(target=displayer, args=(display_queue,))
+    disp.start()
 
     # creation d'une variable globale
-    global pioche, defausse 
     global playLock, defausseLock
     print("Event",event.is_set())
     #on attend le top
@@ -146,51 +141,58 @@ def player(key, deck, event):
 
 
 if __name__ == "__main__":
-    # queue pour la communication interprocess
-    key = 128
-    mq = sysv_ipc.MessageQueue(key, sysv_ipc.IPC_CREAT)
 
-    # initialisation
-    nbJoueurs = 1
-    lcarte=list()
-    for i in range(10):
-        lcarte.append(GameCard("r",i+1))
-        lcarte.append(GameCard("b",i+1))
-    
-    levent=list()
-    for i in range(nbJoueurs):
-        playerDeck=list()
-        for i in range(5):
-            playerDeck.append(lcarte.pop(random.randint(0, len(lcarte)-1)))
-        ev = Event()
-        ev.clear()
-        levent.append(ev)
-        print("Ev",ev.is_set())
-        p = Process(target=player, args=(key, playerDeck, ev,))
-        p.start()
-    for i in range(len(lcarte)):
-        pioche.append(lcarte.pop(random.randint(0, len(lcarte)-1)))
-    
-    defausse.append(pioche.pop())
+    with Manager() as manager:
 
-    # rentre dans le jeu
-    for ev in levent:
-        ev.set()
+        # on génère la pile de cartes LIFO
+        pioche = manager.list()
+        defausse = manager.list()
+        
+        # queue pour la communication interprocess
+        key = 128
+        mq = sysv_ipc.MessageQueue(key, sysv_ipc.IPC_CREAT)
 
-    while True:
-        valid = False
-        message, t = mq.receive()
-        # on bloque la possibilité de poser des cartes
-        carteR = message.decode()
-        print("Carte:"+carteR)
-        # Si c'est valide ou non on renvoie dans la queue le nombre de cartes a piocher
-        if (carteR.color!=defausse[-1].color and (carteR.nb==defausse[-1].nb-1 or carteR.nb==defausse[-1].nb+1) ) or (carteR.color==defausse[-1].color and  carteR.nb==defausse[-1].nb):
-            valid = True
-            mq.send("1".encode())
-        if valid:
-            defausse.append(carteR)
-            mq.send("0".encode())
-        else:
-            mq.send(pioche.pop().encode())
+        # initialisation
+        nbJoueurs = 1
+        lcarte=list()
+        for i in range(10):
+            lcarte.append(GameCard("r",i+1))
+            lcarte.append(GameCard("b",i+1))
+        
+        levent=list()
+        for i in range(nbJoueurs):
+            playerDeck=list()
+            for i in range(5):
+                playerDeck.append(lcarte.pop(random.randint(0, len(lcarte)-1)))
+            ev = Event()
+            ev.clear()
+            levent.append(ev)
+            print("Ev",ev.is_set())
+            p = Process(target=player, args=(key, playerDeck, ev, pioche, defausse))
+            p.start()
+        for i in range(len(lcarte)):
+            pioche.append(lcarte.pop(random.randint(0, len(lcarte)-1)))
+        
+        defausse.append(pioche.pop())
 
-    mq.remove()
+        # rentre dans le jeu
+        for ev in levent:
+            ev.set()
+
+        while True:
+            valid = False
+            message, t = mq.receive()
+            # on bloque la possibilité de poser des cartes
+            carteR = message.decode()
+            print("Carte:"+carteR)
+            # Si c'est valide ou non on renvoie dans la queue le nombre de cartes a piocher
+            if (carteR.color!=defausse[-1].color and (carteR.nb==defausse[-1].nb-1 or carteR.nb==defausse[-1].nb+1) ) or (carteR.color==defausse[-1].color and  carteR.nb==defausse[-1].nb):
+                valid = True
+                mq.send("1".encode())
+            if valid:
+                defausse.append(carteR)
+                mq.send("0".encode())
+            else:
+                mq.send(pioche.pop().encode())
+
+        mq.remove()
