@@ -5,6 +5,7 @@ from time import sleep
 def displayer(dqueue):
     """
     Thread qui sera appelé par le process joueur pour gérer les affichages.
+    queue partagée
     """
     while True:
         item = dqueue.get() # bloquant

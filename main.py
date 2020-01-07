@@ -7,6 +7,7 @@ import select
 import tty
 import termios
 import random
+from card import GameCard
 
 # on génère la pile de cartes LIFO
 pioche = list()
@@ -112,7 +113,7 @@ if __name__ == "__main__":
         value = message.decode()
         # Si c'est valide ou non on renvoie dans la queue le nombre de cartes a piocher
         try:
-            carteR=GameCard(value)
+            carteR = GameCard(value)
         except TypeError:
             print("NotACard")
         else:
