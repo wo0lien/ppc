@@ -5,4 +5,4 @@ class GameCard:
         self.color = color
         self.nb = nb
     def __str__(self):
-        return (str("||"+self.color+"|"+self.nb+"||"))
+        return ("||"+str(self.color)+"|"+str(self.nb)+"||")

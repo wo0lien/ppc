@@ -1,4 +1,4 @@
-from multiprocessing import Lock, Process, Event, Manager
+from multiprocessing import Lock, Process, Event, Manager, Queue
 import threading
 import queue
 import sysv_ipc
@@ -104,28 +104,30 @@ def player(key, deck, event, pioche, defausse):
 
         # kb.set_normal_term()
 
-        print("Defausse :" + ldefausse)
+        print("Defausse :" + str(ldefausse))
         # wait une action du joueur OU une action sur le board avec les event
 
         # handle une modification de la liste
         if event.is_set():
-            with defausseLock():
+            with defausseLock:
                 ldefausse = defausse[-1]
             event.clear()
 
         # if ordre de jouer une carte:
         #   cardindex = cardsaisie
         #   break
-        print("Defausse :"+ldefausse)
+        print("Defausse :"+str(ldefausse))
         for i in range(len(deck)):
-            print("index : "+i+" "+deck[i])
-            
-        cardIndex = int(input("Select index ?"))
+            print("index : ",i,deck[i])
+
+        
+
         # envoie la carte et attend une reponse
 
         playLock.acquire()
+        cardIndex=0
 
-        cardenv = mq.encode(deck[cardIndex])
+        cardenv = deck[cardIndex].encode()
         mq.send(cardenv)
 
         # wait la reponse
