@@ -7,6 +7,9 @@ import select
 import tty
 import random
 from card import GameCard
+import socket
+from time import sleep
+
 
 # KBHit
 
@@ -41,6 +44,7 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+
 def displayer(dqueue):
     """
     Thread qui sera appelé par le process joueur pour gérer les affichages.
@@ -65,15 +69,32 @@ def displayer(dqueue):
         # print(cards)
         dqueue.task_done() # annonce qu'il a fini le tracardsent
 
-
 def player(key, deck, event, pioche, defausse):
+    hote = ''
+    port = 12803
+
+    connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    connexion_principale.bind((hote, port))
+    connexion_principale.listen(5)
+    print("Le serveur écoute à présent sur le port {}".format(port))
+
+    connexion_avec_client, infos_connexion = connexion_principale.accept()
+    connexion_avec_client.settimeout(0.1)
+
+
+    """"msg_recu = b""
+    while msg_recu != b"fin":
+        msg_recu = connexion_avec_client.recv(1024)
+        # L'instruction ci-dessous peut lever une exception si le message
+        # Réceptionné comporte des accents
+        print(msg_recu.decode())
+        connexion_avec_client.send(b"5 / 5")"""
+
 
     # liaison avec le displayer
-
-    display_queue = queue.Queue()
-
-    disp = threading.Thread(target=displayer, args=(display_queue,))
-    disp.start()
+    #display_queue = queue.Queue()
+    #disp = threading.Thread(target=displayer, args=(display_queue,))
+    #disp.start()
 
     # creation d'une variable globale
     global playLock, defausseLock
@@ -83,14 +104,53 @@ def player(key, deck, event, pioche, defausse):
     # on recupere la defausse
     with defausseLock:
         print("def",defausse)
-        ldefausse = defausse[0]
+        ldefausse = defausse[-1]
 
     mq = sysv_ipc.MessageQueue(key)
+    
+    sdef = "d"+str(ldefausse.tosend())
+    sdeck = "m"
+    for car in deck:
+        sdeck+=("/"+str(car.tosend()))
+    print(sdef)
+    connexion_avec_client.send(sdef.encode())
+    print(sdeck)
+    sleep(1)
+    connexion_avec_client.send(sdeck.encode())
 
     # kb = KBHit()
 
     while True:
         # wait une action du joueur OU une action sur le board avec les event
+        if event.is_set():
+            with defausseLock:
+                ldefausse = defausse[-1]
+                sdef = "d"+str(ldefausse.tosend())
+                connexion_avec_client.send(sdef.encode())
+            event.clear()
+        #Action du joueur: 
+        try:
+            msg_recu = connexion_avec_client.recv(1024)
+        except socket.timeout:
+            pass
+        else:
+            playLock.acquire()
+            recplay=msg_recu.decode()
+            print(recplay)
+            if recplay[0]=="2":
+               # envoie la carte et attend une reponse
+                mq.send(recplay.encode())
+            else:
+                print("DontKonowWhatTOdo") 
+            
+            # wait la reponse
+            message, t = mq.receive()
+            message=message.decode()
+            print("RecMQ",message)
+            if message[0]=="0" or message[0]=="1":
+                connexion_avec_client.send(message.encode())
+            playLock.release()
+
 
         # if kb.kbhit():
         #     c = kb.getch()
@@ -104,42 +164,20 @@ def player(key, deck, event, pioche, defausse):
 
         # kb.set_normal_term()
 
-        print("Defausse :" + str(ldefausse))
-        # wait une action du joueur OU une action sur le board avec les event
-
         # handle une modification de la liste
-        if event.is_set():
-            with defausseLock:
-                ldefausse = defausse[-1]
-            event.clear()
+        
 
         # if ordre de jouer une carte:
         #   cardindex = cardsaisie
         #   break
-        print("Defausse :"+str(ldefausse))
-        for i in range(len(deck)):
-            print("index : ",i,deck[i])
+    
+
 
         
-
-        # envoie la carte et attend une reponse
-
-        playLock.acquire()
-        cardIndex=0
-
-        cardenv = deck[cardIndex].encode()
-        mq.send(cardenv)
-
-        # wait la reponse
-        message, t = mq.receive()
-        value = int(message.decode())
-
-        if (value == 1):
-            deck.append(pioche.pop())
-        else:
-            deck.pop(cardIndex)
-
-        playLock.release()
+    #Fin du serveur
+    print("Fermeture de la connexion")
+    connexion_avec_client.close()
+    connexion_principale.close()
 
 
 if __name__ == "__main__":
@@ -185,16 +223,21 @@ if __name__ == "__main__":
             valid = False
             message, t = mq.receive()
             # on bloque la possibilité de poser des cartes
-            carteR = message.decode()
-            print("Carte:"+carteR)
+            msgrec = message.decode()
+            print("MSG:"+msgrec)
             # Si c'est valide ou non on renvoie dans la queue le nombre de cartes a piocher
-            if (carteR.color!=defausse[-1].color and (carteR.nb==defausse[-1].nb-1 or carteR.nb==defausse[-1].nb+1) ) or (carteR.color==defausse[-1].color and  carteR.nb==defausse[-1].nb):
-                valid = True
-                mq.send("1".encode())
-            if valid:
-                defausse.append(carteR)
-                mq.send("0".encode())
-            else:
-                mq.send(pioche.pop().encode())
+            if msgrec[0]=="2":
+                carteR=GameCard(msgrec[1],msgrec[2:])
+                if (carteR.color==defausse[-1].color and (carteR.nb==defausse[-1].nb-1 or carteR.nb==defausse[-1].nb+1) ) or (carteR.color!=defausse[-1].color and  carteR.nb==defausse[-1].nb):
+                    valid = True
+                if valid:
+                    defausse.append(carteR)
+                    mq.send("0000".encode())
+                    for ev in levent:
+                        ev.set()
+                else:
+                    cardpioche=pioche.pop()
+                    reply="1"+str(cardpioche.color)+str(cardpioche.nb)
+                    mq.send(reply.encode())
 
         mq.remove()
