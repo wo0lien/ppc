@@ -245,23 +245,28 @@ if __name__ == "__main__":
                     else:
                         no_reply = False
                         recu = msg_recu.decode()
-                        print("Recu", recu)
+                        # print("Recu", recu)
                         if recu[0] == "0":
                             deck.pop(index)
-                            print("Carte Valide played!")
+                            # print("Carte Valide played!")
                         elif recu[0] == "1":
                             deck.append(GameCard(recu[1], recu[2:]))
-                            print("Carte invalide played!",
-                                  GameCard(recu[1], recu[2:]))
+                            # print("Carte invalide played!",GameCard(recu[1], recu[2:]))
                         else:
                             print("PBLM_RECU")
-                        for i in range(len(deck)):
-                            print("Deck :", i, deck[i])
+                        # for i in range(len(deck)):
+                        #     print("Deck :", i, deck[i])
+
+                        # display it !!
+
+                        display_queue.put([defausse] + deck)
+                        display_queue.join() # on attend la fin du tracardsent
+
         if len(deck)==0 and start:
             #Victoire du joueur
             connexion_avec_serveur.send("4000".encode())
         if (time()-time0>timout) and start:
-            print("TimeOut")
+            # print("TimeOut")
             time0=time()
             tosend = "3000"
             connexion_avec_serveur.send(tosend.encode())
@@ -279,16 +284,17 @@ if __name__ == "__main__":
                 else:
                     no_reply = False
                     recu = msg_recu.decode()
-                    print("Recu", recu)
+                    # print("Recu", recu)
                     if recu[0] == "3":
                         deck.append(GameCard(recu[1], recu[2:]))
-                        print("Carte received !",
-                                GameCard(recu[1], recu[2:]))
+                    #     print("Carte received !", GameCard(recu[1], recu[2:]))
                     else:
                         print("PBLM_RECU")
                     
-                    for i in range(len(deck)):
-                        print("Deck :", i, deck[i])
+                    # display it !!
+
+                    display_queue.put([defausse] + deck)
+                    display_queue.join() # on attend la fin du tracardsent
 
 
         

@@ -30,21 +30,21 @@ def displayer(dqueue):
         
         reds = list()
         blues = list()
+
+        defausse = cards.pop(0)
         
         for card in cards:
-            if i != 0: # si ce n'est pas la premiere carte
-                if (card.color == "r"):
-                    reds.append(card)
-                else:
-                    blues.append(card)
-        
+            if (card.color == "r"):
+                reds.append(card)
+            else:
+                blues.append(card)
         
         # displaying
 
         os.system('clear')
 
         print(bcolors.WARNING)
-        tprint(str(cards[0].nb))
+        tprint(str(defausse.nb))
         print(bcolors.FAIL)
         redsum = ""
         for card in reds:
