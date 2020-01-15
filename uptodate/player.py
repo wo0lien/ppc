@@ -1,8 +1,121 @@
 import socket
 import sys
 import select
-from time import sleep
+from time import sleep , time
 from card import GameCard
+
+#!/usr/bin/env python3
+'''
+A Python class implementing KBHIT, the standard keyboard-interrupt poller.
+Works transparently on Windows and Posix (Linux, Mac OS X).  Doesn't work
+with IDLE.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as 
+published by the Free Software Foundation, either version 3 of the 
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+'''
+
+import os
+from time import sleep
+# Windows
+if os.name == 'nt':
+    import msvcrt
+
+# Posix (Linux, OS X)
+else:
+    import sys
+    import termios
+    import atexit
+    from select import select
+
+
+class KBHit:
+
+    def __init__(self):
+        '''Creates a KBHit object that you can call to do various keyboard things.
+        '''
+
+        if os.name == 'nt':
+            pass
+
+        else:
+
+            # Save the terminal settings
+            self.fd = sys.stdin.fileno()
+            self.new_term = termios.tcgetattr(self.fd)
+            self.old_term = termios.tcgetattr(self.fd)
+
+            # New terminal setting unbuffered
+            self.new_term[3] = (self.new_term[3] & ~termios.ICANON & ~termios.ECHO)
+            termios.tcsetattr(self.fd, termios.TCSAFLUSH, self.new_term)
+
+            # Support normal-terminal reset at exit
+            atexit.register(self.set_normal_term)
+
+
+    def set_normal_term(self):
+        ''' Resets to normal terminal.  On Windows this is a no-op.
+        '''
+
+        if os.name == 'nt':
+            pass
+
+        else:
+            termios.tcsetattr(self.fd, termios.TCSAFLUSH, self.old_term)
+
+
+    def getch(self):
+        ''' Returns a keyboard character after kbhit() has been called.
+            Should not be called in the same program as getarrow().
+        '''
+
+        s = ''
+
+        if os.name == 'nt':
+            return msvcrt.getch().decode('utf-8')
+
+        else:
+            return sys.stdin.read(1)
+
+
+    def getarrow(self):
+        ''' Returns an arrow-key code after kbhit() has been called. Codes are
+        0 : up
+        1 : right
+        2 : down
+        3 : left
+        Should not be called in the same program as getch().
+        '''
+
+        if os.name == 'nt':
+            msvcrt.getch() # skip 0xE0
+            c = msvcrt.getch()
+            vals = [72, 77, 80, 75]
+
+        else:
+            c = sys.stdin.read(3)[2]
+            vals = [65, 67, 66, 68]
+
+        return vals.index(ord(c.decode('utf-8')))
+
+
+    def kbhit(self):
+        ''' Returns True if keyboard character was hit, False otherwise.
+        '''
+        if os.name == 'nt':
+            return msvcrt.kbhit()
+
+        else:
+            dr,dw,de = select([sys.stdin], [], [], 0)
+            return dr != []
+
 
 
 class bcolors:
@@ -17,6 +130,9 @@ class bcolors:
 
 
 if __name__ == "__main__":
+    kb = KBHit()
+
+   
     hote = "localhost"
     port = int(sys.argv[1])
     print("PortRecu", port)
@@ -30,11 +146,14 @@ if __name__ == "__main__":
     #msg_a_envoyer != b"fin"
     msg_a_envoyer = b""
     start=False
+    timout=7
+    time0 =float()
     while True:
         #msg_a_envoyer = input("> ")
         # Peut planter si vous tapez des caractères spéciaux
         #msg_a_envoyer = msg_a_envoyer.encode()
         # On envoie le message
+
         try:
             msg_recu = connexion_avec_serveur.recv(1024)
         except socket.timeout:
@@ -58,6 +177,7 @@ if __name__ == "__main__":
                 print("def cree", defausse)
             elif recu[0] == 'm':
                 start=True
+                time0 = time()
                 recu = recu[2:]
                 lcar = recu.split("/")
                 print(lcar)
@@ -73,23 +193,25 @@ if __name__ == "__main__":
                 break
 
         entry = False
-        while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
-            line = sys.stdin.readline()
-            if line:
-                entry = True
-            else:  # an empty line means stdin has been closed
-                print('eof')
-                exit(0)
-        
-        if entry:
+        #while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
+        #    line = sys.stdin.readline()
+        #    if line:
+        #        entry = True
+        #    else:  # an empty line means stdin has been closed
+        #        print('eof')
+        #        exit(0)
+        #
+        if kb.kbhit():
+            index = kb.getch()
             try:
-                index = int(input("What would you do ?"))
+                index = int(index)
                 assert index >= 0 and index < len(deck)
             except ValueError:
                 print("Vous n'avez pas saisi un nombre.")
             except AssertionError:
                 print("L'index saisie n'est pas valide.")
             else:
+                time0=time()
                 tosend = "2"+str(deck[index].color)+str(deck[index].nb)
                 connexion_avec_serveur.send(tosend.encode())
                 no_reply = True
@@ -121,9 +243,39 @@ if __name__ == "__main__":
         if len(deck)==0 and start:
             #Victoire du joueur
             connexion_avec_serveur.send("4000".encode())
+        if (time()-time0>timout):
+            print("TimeOut")
+            time0=time()
+            tosend = "3000"
+            connexion_avec_serveur.send(tosend.encode())
+            no_reply = True
+            while no_reply:
+                try:
+                    msg_recu = connexion_avec_serveur.recv(1024)
+                    assert msg_recu != b''
+                except socket.timeout:
+                    print("Nodata")
+                    sleep(1)
+                except AssertionError:
+                    print("EmptyMsg")
+                    sleep(1)
+                else:
+                    no_reply = False
+                    recu = msg_recu.decode()
+                    print("Recu", recu)
+                    if recu[0] == "3":
+                        deck.append(GameCard(recu[1], recu[2:]))
+                        print("Carte received !",
+                                GameCard(recu[1], recu[2:]))
+                    else:
+                        print("PBLM_RECU")
+                    
+                    for i in range(len(deck)):
+                        print("Deck :", i, deck[i])
+
 
         
-
+    kb.set_normal_term()
     print("Fermeture de la connexion")
     connexion_avec_serveur.close()
 
