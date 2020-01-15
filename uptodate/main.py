@@ -181,7 +181,7 @@ def player(key, deck, event, pioche, defausse,port):
 
 if __name__ == "__main__":
 
-    port = sys.argv[1]
+    port = int(sys.argv[1])
 
     with Manager() as manager:
 
