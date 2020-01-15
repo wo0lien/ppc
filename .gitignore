@@ -1,2 +1,4 @@
 
 *.json
+__pycache__/kbhitmod.cpython-36.pyc
+__pycache__/card.cpython-36.pyc
