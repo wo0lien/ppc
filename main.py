@@ -69,9 +69,8 @@ def displayer(dqueue):
         # print(cards)
         dqueue.task_done() # annonce qu'il a fini le tracardsent
 
-def player(key, deck, event, pioche, defausse):
+def player(key, deck, event, pioche, defausse,port):
     hote = ''
-    port = 12803
 
     connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     connexion_principale.bind((hote, port))
@@ -182,6 +181,8 @@ def player(key, deck, event, pioche, defausse):
 
 if __name__ == "__main__":
 
+    port = sys.argv[1]
+
     with Manager() as manager:
 
         # on génère la pile de cartes LIFO
@@ -193,7 +194,7 @@ if __name__ == "__main__":
         mq = sysv_ipc.MessageQueue(key, sysv_ipc.IPC_CREAT)
 
         # initialisation
-        nbJoueurs = 1
+        nbJoueurs = 2
         lcarte=list()
         for i in range(10):
             lcarte.append(GameCard("r",i+1))
@@ -208,7 +209,7 @@ if __name__ == "__main__":
             ev.clear()
             levent.append(ev)
             print("Ev",ev.is_set())
-            p = Process(target=player, args=(key, playerDeck, ev, pioche, defausse))
+            p = Process(target=player, args=(key, playerDeck, ev, pioche, defausse,port+i))
             p.start()
         for i in range(len(lcarte)):
             pioche.append(lcarte.pop(random.randint(0, len(lcarte)-1)))
