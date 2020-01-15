@@ -142,7 +142,7 @@ def player(key, deck, event, pioche, defausse, id, port):
             playLock.acquire()
             recplay = msg_recu.decode()
             print(recplay)
-            if recplay[0] == "2":
+            if recplay[0] == "2" or recplay[0]=="3":
                # envoie la carte et attend une reponse
                 mq.send(recplay.encode())
             elif recplay[0] == "4":
@@ -155,7 +155,7 @@ def player(key, deck, event, pioche, defausse, id, port):
             message, t = mq.receive()
             message = message.decode()
             print("RecMQ", message)
-            if message[0] == "0" or message[0] == "1":
+            if message[0] == "0" or message[0] == "1" or message[0]=="3":
                 connexion_avec_client.send(message.encode())
             elif message[0]=="4":
                 pass
@@ -251,6 +251,10 @@ if __name__ == "__main__":
                     cardpioche = pioche.pop()
                     reply = "1"+str(cardpioche.color)+str(cardpioche.nb)
                     mq.send(reply.encode())
+            elif msgrec[0]=="3":
+                cardpioche = pioche.pop()
+                reply = "3"+str(cardpioche.color)+str(cardpioche.nb)
+                mq.send(reply.encode())
             elif msgrec[0]== "4":
                 defausse.append(GameCard('e',msgrec[2:]))
                 mq.send(msgrec.encode())

@@ -139,7 +139,7 @@ if __name__ == "__main__":
 
     display_queue = Queue()
 
-    displayworker = threading.Thread(target=displayer, args=(display_queue,))
+    displayworker = Thread(target=displayer, args=(display_queue,))
     displayworker.start()
 
     cards = list()
@@ -260,7 +260,7 @@ if __name__ == "__main__":
         if len(deck)==0 and start:
             #Victoire du joueur
             connexion_avec_serveur.send("4000".encode())
-        if (time()-time0>timout):
+        if (time()-time0>timout) and start:
             print("TimeOut")
             time0=time()
             tosend = "3000"
