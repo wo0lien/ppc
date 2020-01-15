@@ -2,8 +2,11 @@ import threading
 import queue
 from time import sleep
 from card import GameCard
+from art import *
+import os
 
 class bcolors:
+    BLACK = '\u001b[30m'
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
@@ -25,16 +28,39 @@ def displayer(dqueue):
         if cards is None:
             break
         
-        print(bcolors.WARNING, "-------------deck--------------")
-
-        for i in range(len(cards)):
+        reds = list()
+        blues = list()
+        
+        for card in cards:
             if i != 0: # si ce n'est pas la premiere carte
-                print(cards[i].color, cards[i].nb)
+                if (card.color == "r"):
+                    reds.append(card)
+                else:
+                    blues.append(card)
+        
+        
+        # displaying
 
-        print(bcolors.OKGREEN, "-------------board--------------")
-        print(cards[0].color, cards[0].nb)
+        os.system('clear')
 
-        # print(cards)
+        print(bcolors.WARNING)
+        tprint(str(cards[0].nb))
+        print(bcolors.FAIL)
+        redsum = ""
+        for card in reds:
+            redsum += "   " + str(card.nb)
+        if (redsum != ""):
+            tprint(redsum)
+
+        print(bcolors.OKBLUE)
+        bluesum = ""
+        for card in blues:
+            bluesum += "   " + str(card.nb)
+        if (bluesum != ""):
+            tprint(bluesum)
+
+        print(bcolors.BLACK)
+
         dqueue.task_done() # annonce qu'il a fini le tracardsent
 
 if __name__ == "__main__":
@@ -46,7 +72,8 @@ if __name__ == "__main__":
     
     cards = list()
     for i in range(10):
-        cards.append(GameCard("red", i))
+        cards.append(GameCard("r", i))
+        cards.append(GameCard("b", i+1))
 
     display_queue.put(cards)
     display_queue.join() # on attend la fin du tracardsent
