@@ -15,7 +15,7 @@ class bcolors:
 
 if __name__ == "__main__":
     hote = "localhost"
-    port = 12803
+    port = sys.argv[1]
     defausse = None
     deck =list()
 
