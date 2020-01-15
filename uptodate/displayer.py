@@ -15,6 +15,7 @@ class bcolors:
     FAIL = '\033[91m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
+    WHITE = '\u001b[37m'
     UNDERLINE = '\033[4m'
 
 def displayer(dqueue):
@@ -33,6 +34,29 @@ def displayer(dqueue):
         blues = list()
 
         defausse = cards.pop(0)
+        if defausse.color=='e':
+            if defausse.nb==1:
+                os.system('clear')
+                print(bcolors.OKGREEN)
+                tprint("END")
+                tprint('\n')
+                tprint("YOU  WIN !")
+                break
+            elif defausse.nb==0: 
+                os.system('clear')
+                print(bcolors.FAIL)
+                tprint("END")
+                tprint('\n')
+                tprint("YOU  LOOSE...")
+                break
+            else:
+                os.system('clear')
+                print(bcolors.FAIL)
+                tprint("END")
+                tprint('\n')
+                tprint("EVERYBODY  LOOSE...")
+                break
+
         
         for card in cards:
             if (card.color == "r"):
@@ -58,7 +82,7 @@ def displayer(dqueue):
         i = 0
         for card in cards:
             if (card.color=="r"):
-                redindexes += "        " + str(i)
+                redindexes += "     " + str(chr(i+97)+"    ")
             i += 1
         for card in reds:
             redsum += "   " + str(card.nb)
@@ -72,7 +96,7 @@ def displayer(dqueue):
         i = 0
         for card in cards:
             if (card.color=="b"):
-                blueindexes += "       " + str(i)
+                blueindexes += "     " + str(chr(i+97)+"    ")
             i += 1
         for card in blues:
             bluesum += "   " + str(card.nb)
@@ -80,7 +104,7 @@ def displayer(dqueue):
             tprint(bluesum)
             print(blueindexes)
 
-        print(bcolors.BLACK)
+        print(bcolors.WHITE)
 
         dqueue.task_done() # annonce qu'il a fini le tracardsent
 

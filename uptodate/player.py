@@ -157,7 +157,7 @@ if __name__ == "__main__":
     #msg_a_envoyer != b"fin"
     msg_a_envoyer = b""
     start=False
-    timout=7
+    timout=70
     time0 =float()
     while True:
         #msg_a_envoyer = input("> ")
@@ -197,6 +197,7 @@ if __name__ == "__main__":
                     if len(elt) > 0:
                         deck.append(GameCard(elt[0], elt[1]))
             elif recu[0]=='e':
+                display_queue.put([GameCard('e',recu[1])])
                 if recu[1]=='9':
                     print("Plus de carte, tout le monde perd !")
                 else:
@@ -221,7 +222,7 @@ if __name__ == "__main__":
         if kb.kbhit():
             index = kb.getch()
             try:
-                index = int(index)
+                index = ord(index)-97
                 assert index >= 0 and index < len(deck)
             except ValueError:
                 print("Vous n'avez pas saisi un nombre.")
@@ -296,8 +297,10 @@ if __name__ == "__main__":
                     display_queue.put([defausse] + deck)
                     display_queue.join() # on attend la fin du tracardsent
 
-
+    
         
+    display_queue.put(None)
     kb.set_normal_term()
     print("Fermeture de la connexion")
     connexion_avec_serveur.close()
+    displayworker.join()

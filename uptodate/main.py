@@ -128,7 +128,13 @@ def player(key, deck, event, pioche, defausse, id, port):
                     sdef = "d"+str(ldefausse.tosend())
                     connexion_avec_client.send(sdef.encode())
                 else:
-                    sdef="e"+str(ldefausse.nb)
+                    sdef=""
+                    if ldefausse.nb==id:
+                        sdef="e1"
+                    elif ldefausse.nb==9:
+                        sdef="e9"
+                    else:
+                        sdef="e0"
                     connexion_avec_client.send(sdef.encode())
                     break
             event.clear()
@@ -226,6 +232,7 @@ if __name__ == "__main__":
             pioche.append(lcarte.pop(random.randint(0, len(lcarte)-1)))
 
         defausse.append(pioche.pop())
+        
 
         # rentre dans le jeu
         for ev in levent:
@@ -240,7 +247,7 @@ if __name__ == "__main__":
             # Si c'est valide ou non on renvoie dans la queue le nombre de cartes a piocher
             if msgrec[0] == "2":
                 carteR = GameCard(msgrec[1], msgrec[2:])
-                if (carteR.color == defausse[-1].color and (carteR.nb == defausse[-1].nb-1 or carteR.nb == defausse[-1].nb+1)) or (carteR.color != defausse[-1].color and carteR.nb == defausse[-1].nb):
+                if (carteR.color == defausse[-1].color and (carteR.nb%10 == (defausse[-1].nb-1)%10 or carteR.nb%10 == (defausse[-1].nb+1)%10)) or (carteR.color != defausse[-1].color and carteR.nb == defausse[-1].nb):
                     valid = True
                 if valid:
                     defausse.append(carteR)
