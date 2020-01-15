@@ -3,6 +3,7 @@ import sys
 import select
 from time import sleep , time
 from card import GameCard
+import displayer
 
 #!/usr/bin/env python3
 '''
@@ -130,6 +131,7 @@ class bcolors:
 
 
 if __name__ == "__main__":
+    
     kb = KBHit()
 
    
@@ -278,28 +280,3 @@ if __name__ == "__main__":
     kb.set_normal_term()
     print("Fermeture de la connexion")
     connexion_avec_serveur.close()
-
-
-def displayer(dqueue):
-    """
-    Thread qui sera appelé par le process joueur pour gérer les affichages.
-    queue partagée qui envoie a chaque fois une liste de GameCard, la premiere est celle de la pioche, les suivantes sont celles de la main du joueur
-    """
-    while True:
-        cards = dqueue.get()  # bloquant
-
-        # exiting the thread
-        if cards is None:
-            break
-
-        print(bcolors.WARNING, "-------------deck--------------")
-
-        for i in range(len(cards)):
-            if i != 0:  # si ce n'est pas la premiere carte
-                print(cards[i].color, cards[i].nb)
-
-        print(bcolors.OKGREEN, "-------------board--------------")
-        print(cards[0].color, cards[0].nb)
-
-        # print(cards)
-        dqueue.task_done()  # annonce qu'il a fini le tracardsent
