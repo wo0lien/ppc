@@ -29,6 +29,7 @@ if __name__ == "__main__":
     connexion_avec_serveur.settimeout(0.2)
     #msg_a_envoyer != b"fin"
     msg_a_envoyer = b""
+    start=False
     while True:
         #msg_a_envoyer = input("> ")
         # Peut planter si vous tapez des caractères spéciaux
@@ -56,6 +57,7 @@ if __name__ == "__main__":
                 defausse = GameCard(ldef[0], ldef[1])
                 print("def cree", defausse)
             elif recu[0] == 'm':
+                start=True
                 recu = recu[2:]
                 lcar = recu.split("/")
                 print(lcar)
@@ -63,6 +65,12 @@ if __name__ == "__main__":
                     elt = elt.split("|")
                     if len(elt) > 0:
                         deck.append(GameCard(elt[0], elt[1]))
+            elif recu[0]=='e':
+                if recu[1]=='9':
+                    print("Plus de carte, tout le monde perd !")
+                else:
+                    print("Le joueur",recu[1],"gagne la partie !")
+                break
 
         entry = False
         while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
@@ -110,7 +118,7 @@ if __name__ == "__main__":
                             print("PBLM_RECU")
                         for i in range(len(deck)):
                             print("Deck :", i, deck[i])
-        if len(deck)==0:
+        if len(deck)==0 and start:
             #Victoire du joueur
             connexion_avec_serveur.send("4000".encode())
 

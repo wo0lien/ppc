@@ -124,9 +124,15 @@ def player(key, deck, event, pioche, defausse, id, port):
         if event.is_set():
             with defausseLock:
                 ldefausse = defausse[-1]
-                sdef = "d"+str(ldefausse.tosend())
-                connexion_avec_client.send(sdef.encode())
+                if ldefausse.color != 'e':
+                    sdef = "d"+str(ldefausse.tosend())
+                    connexion_avec_client.send(sdef.encode())
+                else:
+                    sdef="e"+str(ldefausse.nb)
+                    connexion_avec_client.send(sdef.encode())
+                    break
             event.clear()
+            
         # Action du joueur:
         try:
             msg_recu = connexion_avec_client.recv(1024)
@@ -140,7 +146,8 @@ def player(key, deck, event, pioche, defausse, id, port):
                # envoie la carte et attend une reponse
                 mq.send(recplay.encode())
             elif recplay[0] == "4":
-                mq.send("40"+str(id).encode())
+                recplay="40"+str(id)
+                mq.send(recplay.encode())
             else:
                 print("DontKonowWhatTOdo")
 
@@ -150,11 +157,10 @@ def player(key, deck, event, pioche, defausse, id, port):
             print("RecMQ", message)
             if message[0] == "0" or message[0] == "1":
                 connexion_avec_client.send(message.encode())
+            elif message[0]=="4":
+                pass
             playLock.release()
         
-        #fin de la partie
-        if ldefausse.color=="e":
-            connexion_avec_client.send()
 
         # if kb.kbhit():
         #     c = kb.getch()
@@ -202,6 +208,7 @@ if __name__ == "__main__":
             lcarte.append(GameCard("b", i+1))
 
         levent = list()
+        lprocess=list()
         for i in range(nbJoueurs):
             playerDeck = list()
             for _ in range(5):
@@ -212,6 +219,7 @@ if __name__ == "__main__":
             print("Ev", ev.is_set())
             p = Process(target=player, args=(
                 key, playerDeck, ev, pioche, defausse, i, port+i))
+            lprocess.append(p)
             p.start()
 
         for i in range(len(lcarte)):
@@ -244,10 +252,18 @@ if __name__ == "__main__":
                     reply = "1"+str(cardpioche.color)+str(cardpioche.nb)
                     mq.send(reply.encode())
             elif msgrec[0]== "4":
+                defausse.append(GameCard('e',msgrec[2:]))
                 mq.send(msgrec.encode())
-                defausse.append(GameCard('e',msgrec[1]))
                 for ev in levent:
                     ev.set()
                 break
-
+            
+            if len(pioche)==0:
+                defausse.append(GameCard('e',9))
+                for ev in levent:
+                    ev.set()
+                break
+        
+        for p in lprocess:
+            p.join()
         mq.remove()
