@@ -4,11 +4,29 @@ import queue
 import sysv_ipc
 import sys
 import select
+import tty
 import random
 from card import GameCard
 import socket
 from time import sleep
 
+
+# KBHit
+
+import os
+
+# Windows
+if os.name == 'nt':
+    import msvcrt
+
+# Posix (Linux, OS X)
+else:
+    import sys
+    import termios
+    import atexit
+    from select import select
+
+from kbhitmod import KBHit
 
 # mutex
 playLock = Lock()
@@ -100,6 +118,8 @@ def player(key, deck, event, pioche, defausse):
     sleep(1)
     connexion_avec_client.send(sdeck.encode())
 
+    # kb = KBHit()
+
     while True:
         # wait une action du joueur OU une action sur le board avec les event
         if event.is_set():
@@ -132,19 +152,17 @@ def player(key, deck, event, pioche, defausse):
             playLock.release()
 
 
-        while True:
-            input = select.select([sys.stdin], [], [], 1)[0]
-            if input:
-                value = sys.stdin.readline().rstrip()
+        # if kb.kbhit():
+        #     c = kb.getch()
+        #     print(c)
+        #     if (int(c) > 0 and int(c) <= len(deck)):
+        #         # si l'input fait partie du deck de la personne
+        #         pass
+        #     else:
+        #         print("not a valid card")
 
-                if (value == "q"):
-                    print("Exiting")
-                    sys.exit(0)
-                else:
-                    print("You entered: %s" % value)
-            else:
-                print("no input")
 
+        # kb.set_normal_term()
 
         # handle une modification de la liste
         
@@ -190,7 +208,7 @@ if __name__ == "__main__":
             ev.clear()
             levent.append(ev)
             print("Ev",ev.is_set())
-            p = Process(target=player, args=(key, playerDeck, ev, pioche, defausse,))
+            p = Process(target=player, args=(key, playerDeck, ev, pioche, defausse))
             p.start()
         for i in range(len(lcarte)):
             pioche.append(lcarte.pop(random.randint(0, len(lcarte)-1)))
