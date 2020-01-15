@@ -3,7 +3,9 @@ import sys
 import select
 from time import sleep , time
 from card import GameCard
-import displayer
+from displayer import displayer
+from threading import Thread
+from queue import Queue
 
 #!/usr/bin/env python3
 '''
@@ -118,7 +120,6 @@ class KBHit:
             return dr != []
 
 
-
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -134,6 +135,14 @@ if __name__ == "__main__":
     
     kb = KBHit()
 
+    # connexion avec le displayer
+
+    display_queue = Queue()
+
+    displayworker = threading.Thread(target=displayer, args=(display_queue,))
+    displayworker.start()
+
+    cards = list()
    
     hote = "localhost"
     port = int(sys.argv[1])
@@ -166,23 +175,23 @@ if __name__ == "__main__":
             if msg_recu == b'':
                 pass
             else:
-                print("msg", msg_recu.decode())
+                # print("msg", msg_recu.decode())
                 recu = msg_recu.decode()
 
             if recu[0] == 'd':
-                print(recu)
+                # print(recu)
                 recu = recu[1:]
-                print(recu)
+                # print(recu)
                 ldef = recu.split("|")
-                print(ldef)
+                # print(ldef)
                 defausse = GameCard(ldef[0], ldef[1])
-                print("def cree", defausse)
+                # print("def cree", defausse)
             elif recu[0] == 'm':
                 start=True
                 time0 = time()
                 recu = recu[2:]
                 lcar = recu.split("/")
-                print(lcar)
+                # print(lcar)
                 for elt in lcar:
                     elt = elt.split("|")
                     if len(elt) > 0:
@@ -193,6 +202,12 @@ if __name__ == "__main__":
                 else:
                     print("Le joueur",recu[1],"gagne la partie !")
                 break
+            
+            # display it !!
+
+            display_queue.put([defausse] + deck)
+            display_queue.join() # on attend la fin du tracardsent
+    
 
         entry = False
         #while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
