@@ -188,7 +188,7 @@ if __name__ == "__main__":
                     display_queue.put([defausse] + deck)
                     display_queue.join()  # on attend la fin de l'affichage
 
-    display_queue.put(None)
+    display_queue.put(None) # kill le displayer
     kb.set_normal_term()
     print("Fermeture de la connexion")
     server_socket.close()

@@ -59,7 +59,7 @@ def displayer(dqueue):
                 tprint("END")
                 tprint('\n')
                 tprint("EVERYBODY  LOOSE...")
-                breaks
+                break
 
         # on trie les cartes restantes par couleur
         for card in cards:
