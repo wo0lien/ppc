@@ -1,18 +1,16 @@
 # -*-coding: utf8-*-
-"""
-La classe gamecard permet le transport facilité des données entre les threads client et displayer
-"""
-
-
 class GameCard:
     """
-    Constructeur iinitialisant une nouvelle carte a partir de 2 parametres
-    Parameters:
-        color (string): couleur de la carte r pour red ou b pour blue
-        nb (int): valeur de la carte
+    La classe gamecard permet le transport facilité des données entre les threads client et displayer
     """
 
     def __init__(self, color, nb):
+        """
+        Constructeur iinitialisant une nouvelle carte a partir de 2 parametres
+        Parameters:
+            color (string): couleur de la carte r pour red ou b pour blue
+            nb (int): valeur de la carte
+        """
         self.color = str(color)
         self.nb = int(nb)
 

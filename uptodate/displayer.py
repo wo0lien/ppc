@@ -5,18 +5,18 @@ from card import GameCard
 from art import *
 import os
 
+
 class bcolors:
+    """
+    Class used to change the terminal colors
+    """
     BLACK = '\u001b[30m'
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
+    BLUE = '\033[94m'
     CYAN = '\u001b[36m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
+    ORANGE = '\033[93m'
+    RED = '\033[91m'
     WHITE = '\u001b[37m'
-    UNDERLINE = '\033[4m'
+
 
 def displayer(dqueue):
     """
@@ -24,64 +24,69 @@ def displayer(dqueue):
     queue partagée qui envoie a chaque fois une liste de GameCard, la premiere est celle de la pioche, les suivantes sont celles de la main du joueur
     """
     while True:
-        cards = dqueue.get() # bloquant
+        # attends une demande d'affichage
+        cards = dqueue.get()  # bloquant
 
-        # exiting the thread
+        # exiting the thread if None is sent
         if cards is None:
             break
-        
+
         reds = list()
         blues = list()
 
+        # enleve la premiere carte de cards car cest la defausse
         defausse = cards.pop(0)
-        if defausse.color=='e':
-            if defausse.nb==1:
+
+        # affichage de fin de jeu si la couleur de la carte est "e"
+        if defausse.color == 'e':
+            if defausse.nb == 1:
                 os.system('clear')
                 print(bcolors.OKGREEN)
                 tprint("END")
                 tprint('\n')
                 tprint("YOU  WIN !")
                 break
-            elif defausse.nb==0: 
+            elif defausse.nb == 0:
                 os.system('clear')
-                print(bcolors.FAIL)
+                print(bcolors.RED)
                 tprint("END")
                 tprint('\n')
                 tprint("YOU  LOOSE...")
                 break
             else:
                 os.system('clear')
-                print(bcolors.FAIL)
+                print(bcolors.RED)
                 tprint("END")
                 tprint('\n')
                 tprint("EVERYBODY  LOOSE...")
-                break
+                breaks
 
-        
+        # on trie les cartes restantes par couleur
         for card in cards:
             if (card.color == "r"):
                 reds.append(card)
             else:
                 blues.append(card)
-        
-        # displaying
 
+        # display
         os.system('clear')
 
-        if (defausse.color=="r"):
-            print(bcolors.WARNING)
+        # affichage de la defausse
+        if (defausse.color == "r"):
+            print(bcolors.ORANGE)
         else:
             print(bcolors.CYAN)
-        
-        tprint(str(defausse.nb))
-        
 
-        print(bcolors.FAIL)
+        tprint(str(defausse.nb))  # fonction de la lib art
+
+        # affichage des cartes rouges
+        print(bcolors.RED)
         redsum = ""
         redindexes = ""
         i = 0
+        # recuperation des indexs des cartes rouges
         for card in cards:
-            if (card.color=="r"):
+            if (card.color == "r"):
                 redindexes += "     " + str(chr(i+97)+"    ")
             i += 1
         for card in reds:
@@ -90,12 +95,13 @@ def displayer(dqueue):
             print(redindexes)
             tprint(redsum)
 
-        print(bcolors.OKBLUE)
+        # affichage des cartes bleues
+        print(bcolors.BLUE)
         bluesum = ""
         blueindexes = ""
         i = 0
         for card in cards:
-            if (card.color=="b"):
+            if (card.color == "b"):
                 blueindexes += "     " + str(chr(i+97)+"    ")
             i += 1
         for card in blues:
@@ -106,22 +112,4 @@ def displayer(dqueue):
 
         print(bcolors.WHITE)
 
-        dqueue.task_done() # annonce qu'il a fini le tracardsent
-
-if __name__ == "__main__":
-    
-    display_queue = queue.Queue()
-
-    displayer = threading.Thread(target=displayer, args=(display_queue,))
-    displayer.start()
-    
-    cards = list()
-    for i in range(10):
-        cards.append(GameCard("r", i))
-        cards.append(GameCard("b", i+1))
-
-    display_queue.put(cards)
-    display_queue.join() # on attend la fin du tracardsent
-    
-    display_queue.put(None)
-    
+        dqueue.task_done()  # annonce qu'il a fini
