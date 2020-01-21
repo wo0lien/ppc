@@ -17,6 +17,7 @@ class bcolors:
     RED = '\033[91m'
     WHITE = '\u001b[37m'
 
+spaces = [" ","   ","   ","    ","   ","   ","   ","   ","   ","     "]
 
 def displayer(dqueue):
     """
@@ -87,7 +88,7 @@ def displayer(dqueue):
         # recuperation des indexs des cartes rouges
         for card in cards:
             if (card.color == "r"):
-                redindexes += "     " + str(chr(i+97)+"    ")
+                redindexes += spaces[card.nb-1] + str(chr(i+97)+ spaces[card.nb-1] + "   ")
             i += 1
         for card in reds:
             redsum += "   " + str(card.nb)
@@ -102,7 +103,7 @@ def displayer(dqueue):
         i = 0
         for card in cards:
             if (card.color == "b"):
-                blueindexes += "     " + str(chr(i+97)+"    ")
+                blueindexes += spaces[card.nb-1] + str(chr(i+97) + spaces[card.nb-1] + "   ")
             i += 1
         for card in blues:
             bluesum += "   " + str(card.nb)
