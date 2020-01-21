@@ -60,7 +60,7 @@ if __name__ == "__main__":
     #msg_a_envoyer != b"fin"
     msg_a_envoyer = b""
     start = False
-    timout = 70
+    timout = 15
     time0 = float()
     while True:
 

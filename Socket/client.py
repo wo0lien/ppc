@@ -19,5 +19,6 @@ while msg_a_envoyer != b"fin":
     
     print(msg_recu.decode()) # Là encore, peut planter s'il y a des accents
 
+
 print("Fermeture de la connexion")
 connexion_avec_serveur.close()
