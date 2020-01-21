@@ -38,9 +38,9 @@ if __name__ == "__main__":
     # récupération des arguments de la commande
     parser = argparse.ArgumentParser()
     parser.add_argument("--hostname", "-hn", type=str,
-                        help="Server hostname", required=True)
+                        help="Server hostname", default="localhost")
     parser.add_argument("--port", "-p", type=int,
-                        help="Server listening port", required=True)
+                        help="Server listening port", default="12800")
     args = parser.parse_args()
 
     # handling user inputs

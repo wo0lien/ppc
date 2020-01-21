@@ -13,7 +13,7 @@ class GameCard:
         """
         self.color = str(color)
         self.nb = int(nb)
-
+        
     def __str__(self):
         """Affichage d'une carte - utilisé pour le debug"""
         return ("||"+str(self.color)+"|"+str(self.nb)+"||")

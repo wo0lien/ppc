@@ -18,7 +18,7 @@ defausseLock = Lock()
 
 
 def player(key, deck, event, pioche, defausse, id, port):
-    
+
     hote = ''
     print(port)
     connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,7 +26,7 @@ def player(key, deck, event, pioche, defausse, id, port):
     connexion_principale.listen(5)
     print("Le serveur écoute à présent sur le port {}".format(port))
 
-    connexion_avec_client, infos_connexion = connexion_principale.accept()
+    connexion_avec_client, _ = connexion_principale.accept()
     connexion_avec_client.settimeout(0.1)
 
     # creation d'une variable globale
@@ -90,7 +90,7 @@ def player(key, deck, event, pioche, defausse, id, port):
                 print("DontKonowWhatTOdo")
 
             # wait la reponse
-            message, t = mq.receive()
+            message, _ = mq.receive()
             message = message.decode()
             print("RecMQ", message)
             if message[0] == "0" or message[0] == "1" or message[0] == "3":
@@ -98,7 +98,6 @@ def player(key, deck, event, pioche, defausse, id, port):
             elif message[0] == "4":
                 pass
             playLock.release()
-
 
     # Fin du serveur
     print("Fermeture de la connexion")
