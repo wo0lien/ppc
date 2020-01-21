@@ -16,6 +16,7 @@ class bcolors:
     ORANGE = '\033[93m'
     RED = '\033[91m'
     WHITE = '\u001b[37m'
+    GREEN = '\033[32m'
 
 spaces = [" ","   ","   ","    ","   ","   ","   ","   ","   ","     "]
 
@@ -42,7 +43,7 @@ def displayer(dqueue):
         if defausse.color == 'e':
             if defausse.nb == 1:
                 os.system('clear')
-                print(bcolors.OKGREEN)
+                print(bcolors.GREEN)
                 tprint("END")
                 tprint('\n')
                 tprint("YOU  WIN !")
@@ -52,14 +53,14 @@ def displayer(dqueue):
                 print(bcolors.RED)
                 tprint("END")
                 tprint('\n')
-                tprint("YOU  LOOSE...")
+                tprint("YOU  LOSE...")
                 break
             else:
                 os.system('clear')
                 print(bcolors.RED)
                 tprint("END")
                 tprint('\n')
-                tprint("EVERYBODY  LOOSE...")
+                tprint("EVERYBODY  LOSE...")
                 break
 
         # on trie les cartes restantes par couleur

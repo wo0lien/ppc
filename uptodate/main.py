@@ -17,8 +17,8 @@ playLock = Lock()
 defausseLock = Lock()
 
 
-def player(key, deck, event, pioche, defausse, id, port):
-
+def player(key, deck, event, defausse, id, port):
+    
     hote = ''
     print(port)
     connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -98,7 +98,7 @@ def player(key, deck, event, pioche, defausse, id, port):
             elif message[0] == "4":
                 pass
             playLock.release()
-
+            
     # Fin du serveur
     print("Fermeture de la connexion")
     connexion_avec_client.close()
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     # récupération des arguments de la commande
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", "-p", type=int,
-                        help="Server listening port", required=True)
+                        help="Server listening port", default=12800)
     args = parser.parse_args()
 
     port = args.port
@@ -144,7 +144,7 @@ if __name__ == "__main__":
             levent.append(ev)
             print("Ev", ev.is_set())
             p = Process(target=player, args=(
-                key, playerDeck, ev, pioche, defausse, i, port+i))
+                key, playerDeck, ev, defausse, i, port+i))
             lprocess.append(p)
             p.start()
 
